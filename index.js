@@ -1,4 +1,5 @@
 import express from 'express'; // const express = require('express'); package.json -> "type": "module"
+import jwt from 'jsonwebtoken';
 
 const app = express();
 
@@ -11,9 +12,16 @@ app.get("/", (req, res) => {
 
 app.post("/auth/login", (req, res) => {
     console.log(req.body); // req.body -> json from post request
-    
+
+    // object {email: ..., password: ...} is encoded with token
+    const token = jwt.sign({ 
+        email: req.body.email,
+        password: req.body.password
+    }, 'secret-private-key');
+
     res.json({
-        success: true
+        success: true,
+        token
     });
 });
 
