@@ -1,5 +1,14 @@
 import express from 'express'; // const express = require('express'); package.json -> "type": "module"
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
+
+mongoose.connect(
+    'mongodb+srv://vvvvvec1or:adminvector@my-cluster.nvcxdyv.mongodb.net/?retryWrites=true&w=majority'
+).then(() => {
+    console.log('successfully connected to database');
+}).catch((error) => {
+    console.log('error while connecting to database', error);
+});
 
 const app = express();
 
@@ -14,7 +23,7 @@ app.post("/auth/login", (req, res) => {
     console.log(req.body); // req.body -> json from post request
 
     // object {email: ..., password: ...} is encoded with token
-    const token = jwt.sign({ 
+    const token = jwt.sign({
         email: req.body.email,
         password: req.body.password
     }, 'secret-private-key');
