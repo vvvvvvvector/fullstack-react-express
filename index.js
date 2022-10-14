@@ -25,6 +25,53 @@ app.get("/", (req, res) => {
     res.send("hello world!!!");
 });
 
+app.post("/auth/signin", async (req, res) => {
+    try {
+        const user = await UserModel.findOne({
+            email: req.body.email
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Incorrect username or password."
+            });
+        }
+
+        const isValidPassword = await bcrypt.compare(req.body.password, user._doc.password);
+
+        if (!isValidPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Incorrect username or password."
+            });
+        }
+
+        const token = jwt.sign({
+            _id: user._id
+        },
+            'super-secret-key',
+            {
+                expiresIn: "1d"
+            }
+        );
+
+        res.json({
+            success: true,
+            message: "Signed in successfully.",
+            user,
+            token
+        });
+    } catch (error) {
+        console.log(error)
+
+        res.json({
+            success: false,
+            message: "Sign in error."
+        });
+    }
+});
+
 // signUpValidation -> req validation
 app.post("/auth/signup", signUpValidation, async (req, res) => {
     try {
@@ -56,23 +103,23 @@ app.post("/auth/signup", signUpValidation, async (req, res) => {
 
         res.json({
             success: true,
-            message: "User was created successfully",
+            message: "User was created successfully.",
             user,
             token
         });
-    } catch (err) {
-        console.log(err); // for dev
+    } catch (error) {
+        console.log(error); // for dev
 
         res.status(500).json({ // for user
             success: false,
-            message: "Error while creating user"
+            message: "Error while creating user."
         })
     }
 });
 
-app.listen(4500, (err) => {
-    if (err) {
-        console.log(err);
+app.listen(4500, (error) => {
+    if (error) {
+        console.log(error);
     } else {
         console.log("Server started.");
     }
