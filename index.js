@@ -1,15 +1,18 @@
 import express from 'express'; // const express = require('express'); package.json -> "type": "module"
 import mongoose from 'mongoose';
-import { validationResult } from 'express-validator';
+import bcrypt from 'bcrypt';
 
+import { validationResult } from 'express-validator';
 import { signUpValidation } from './validations/auth.js';
 
+import UserModel from './models/User.js';
+
 mongoose.connect(
-    'mongodb+srv://vvvvvec1or:adminvector@my-cluster.nvcxdyv.mongodb.net/?retryWrites=true&w=majority'
+    'mongodb+srv://vvvvvec1or:adminvector@my-cluster.nvcxdyv.mongodb.net/express-test?retryWrites=true&w=majority'
 ).then(() => {
     console.log('Successfully connected to database');
 }).catch((error) => {
-    console.log('Srror while connecting to database', error);
+    console.log('Error while connecting to database', error);
 });
 
 const app = express();
@@ -21,15 +24,39 @@ app.get("/", (req, res) => {
     res.send("hello world!!!");
 });
 
-app.post("/auth/signup", signUpValidation, (req, res) => {
-    const errors = validationResult(req);
+// signUpValidation -> req validation
+app.post("/auth/signup", signUpValidation, async (req, res) => {
+    try {
+        const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        return res.status(400).json(errors.array());
+        if (!errors.isEmpty()) {
+            return res.status(400).json(errors.array());
+        }
+
+        const password = req.body.password;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const doc = new UserModel({
+            email: req.body.email,
+            hashedPassword
+        });
+
+        const user = await doc.save();
+
+        res.json({
+            success: true,
+            message: "User was created successfully",
+            user
+        });
+    } catch (err) {
+        console.log(err); // for dev
+
+        res.status(500).json({ // for user
+            success: false,
+            message: "Error while creating user"
+        })
     }
-    res.json({
-        success: true
-    });
 });
 
 app.listen(4500, (err) => {
