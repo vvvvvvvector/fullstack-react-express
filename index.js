@@ -1,6 +1,7 @@
 import express from 'express'; // const express = require('express'); package.json -> "type": "module"
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import { validationResult } from 'express-validator';
 import { signUpValidation } from './validations/auth.js';
@@ -35,19 +36,29 @@ app.post("/auth/signup", signUpValidation, async (req, res) => {
 
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const hash = await bcrypt.hash(password, salt);
 
         const doc = new UserModel({
             email: req.body.email,
-            hashedPassword
+            password: hash
         });
 
         const user = await doc.save();
 
+        const token = jwt.sign({
+            _id: user._id
+        },
+            'super-secret-key',
+            {
+                expiresIn: "1d"
+            }
+        );
+
         res.json({
             success: true,
             message: "User was created successfully",
-            user
+            user,
+            token
         });
     } catch (err) {
         console.log(err); // for dev

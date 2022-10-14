@@ -6,7 +6,7 @@ const UserScheme = new mongoose.Schema({
         unique: true,
         require: true
     },
-    hashedPassword: {
+    password: {
         type: String,
         unique: true,
         require: true
