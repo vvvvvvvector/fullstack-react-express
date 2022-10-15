@@ -1,5 +1,43 @@
 import PostModel from '../models/post.js'
 
+export const removeOne = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        PostModel.findOneAndDelete({
+            _id: postId
+        }, (err, doc) => {
+            if (err) {
+                console.log(error);
+
+                return res.status(500).json({
+                    success: false,
+                    message: "error while deleting post."
+                });
+            }
+
+            if (!doc) {
+                return res.status(500).json({
+                    success: false,
+                    message: "post to delete not found."
+                });
+            }
+
+            res.json({
+                success: true,
+                message: "post was successfully deleted."
+            });
+        });
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "error while deleting post."
+        });
+    }
+};
+
 export const getOne = async (req, res) => {
     try {
         const postId = req.params.id;
