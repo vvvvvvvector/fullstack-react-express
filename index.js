@@ -26,10 +26,12 @@ app.get('/', (_, res) => {
     res.send('hello world!!!');
 });
 
-app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 app.get('/posts', PostController.getAll);
 app.get('/posts/:id', PostController.getOne);
+
+app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 app.delete('/posts/:id', checkAuth, PostController.removeOne);
+app.patch('/posts/:id', checkAuth, PostController.update);
 
 app.post('/auth/signin', UserController.signIn);
 

@@ -1,10 +1,65 @@
 import PostModel from '../models/post.js'
 
-export const removeOne = async (req, res) => {
+export const update = (req, res) => {
     try {
         const postId = req.params.id;
 
-        PostModel.findOneAndDelete({
+        PostModel.findOne({
+            _id: postId
+        }, async (err, doc) => {
+            if (err) {
+                console.log(error);
+                ``
+                return res.status(500).json({
+                    success: false,
+                    message: "error while finding post."
+                });
+            }
+
+            if (!doc) {
+                return res.status(500).json({
+                    success: false,
+                    message: "post to update not found."
+                });
+            }
+
+            if (doc.user.toString() !== req.userId) {
+                return res.status(403).json({
+                    success: false,
+                    message: "it is not your post, you can't update it."
+                });
+            }
+
+            await PostModel.updateOne({
+                _id: postId
+            }, {
+                title: req.body.title,
+                text: req.body.text,
+                tags: req.body.tags,
+                imageUrl: req.body.imageUrl,
+                user: req.userId
+            });
+
+            res.json({
+                success: true,
+                message: 'post was updated successfully.'
+            });
+        });
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: 'error while updating post.'
+        });
+    }
+};
+
+export const removeOne = (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        PostModel.findOne({
             _id: postId
         }, (err, doc) => {
             if (err) {
@@ -12,7 +67,7 @@ export const removeOne = async (req, res) => {
 
                 return res.status(500).json({
                     success: false,
-                    message: "error while deleting post."
+                    message: "error while finding post."
                 });
             }
 
@@ -23,9 +78,36 @@ export const removeOne = async (req, res) => {
                 });
             }
 
-            res.json({
-                success: true,
-                message: "post was successfully deleted."
+            if (doc.user.toString() !== req.userId) {
+                return res.status(403).json({
+                    success: false,
+                    message: "it is not your post, you can't remove it."
+                });
+            }
+
+            PostModel.deleteOne({
+                _id: postId
+            }, (err, doc) => {
+                if (err) {
+                    console.log(error);
+
+                    return res.status(500).json({
+                        success: false,
+                        message: "error while deleting post."
+                    });
+                }
+
+                if (!doc) {
+                    return res.status(500).json({
+                        success: false,
+                        message: "post to delete not found."
+                    });
+                }
+
+                res.json({
+                    success: true,
+                    message: "post was successfully deleted."
+                });
             });
         });
     } catch (error) {
