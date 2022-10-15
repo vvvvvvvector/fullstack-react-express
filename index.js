@@ -28,6 +28,7 @@ app.get('/', (_, res) => {
 
 app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 app.get('/posts', PostController.getAll);
+app.get('/posts/:id', PostController.getOne);
 
 app.post('/auth/signin', UserController.signIn);
 

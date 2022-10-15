@@ -1,8 +1,53 @@
 import PostModel from '../models/post.js'
 
+export const getOne = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        // if i dont want to increment viewsCount -> findOne(), findOneById()
+
+        PostModel.findOneAndUpdate({
+            _id: postId
+        }, {
+            $inc: {
+                viewsCount: 1
+            }
+        }, {
+            returnDocument: 'after'
+        }, (err, doc) => {
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "error while getting post."
+                });
+            }
+
+            if (!doc) {
+                return res.status(404).json({
+                    success: false,
+                    message: "post not found."
+                });
+            }
+
+            res.json({
+                success: true,
+                doc
+            });
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "error while getting post."
+        });
+    }
+};
+
 export const getAll = async (_, res) => {
     try {
-        const posts = await PostModel.find();
+        const posts = await PostModel.find().populate('user').exec();
 
         res.json({
             success: true,
@@ -13,7 +58,7 @@ export const getAll = async (_, res) => {
 
         res.status(500).json({
             success: false,
-            message: "error while getting all posts"
+            message: "error while getting all posts."
         });
     }
 };
