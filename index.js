@@ -5,7 +5,7 @@ import { signUpValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
 
 import * as UserController from './controllers/userController.js';
-// import * as PostContoller from './controllers/postController.js';
+import * as PostController from './controllers/postController.js';
 
 import UserModel from './models/user.js';
 
@@ -25,6 +25,9 @@ mongoose.connect(
 app.get('/', (_, res) => {
     res.send('hello world!!!');
 });
+
+app.post('/posts', checkAuth, postCreateValidation, PostController.create);
+app.get('/posts', PostController.getAll);
 
 app.post('/auth/signin', UserController.signIn);
 
@@ -58,8 +61,6 @@ app.get('/auth/me', checkAuth, async (req, res) => {
         });
     }
 });
-
-// app.post('/posts', postCreateValidation, PostContoller.create);
 
 app.listen(4500, (error) => {
     if (error) {
