@@ -1,5 +1,6 @@
 import express from 'express'; // const express = require('express'); package.json -> 'type': 'module'
 import mongoose from 'mongoose';
+import multer from 'multer';
 
 import { signUpValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
@@ -12,6 +13,26 @@ import UserModel from './models/user.js';
 const app = express();
 
 app.use(express.json()); // allows to read json in req
+app.use('/uploads', express.static('uploads')); // not just get request -> it's get request to get a static file
+
+const storage = multer.diskStorage({
+    destination: (_, file, callback) => { // returns path to the file
+        callback(null, 'uploads');
+    },
+    filename: (_, file, callback) => { // before saving explains how file is named
+        callback(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage });
+
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+    res.json({
+        success: true,
+        message: 'image was successfully uploaded.',
+        url: `/uploads/${req.file.originalname}`
+    });
+});
 
 mongoose.connect(
     'mongodb+srv://vvvvvec1or:adminvector@my-cluster.nvcxdyv.mongodb.net/express-test?retryWrites=true&w=majority'
@@ -21,9 +42,13 @@ mongoose.connect(
     console.log('Error while connecting to database', error);
 });
 
-// req -> what client send to me(for exp. from frontend) && res -> what i will send to client
-app.get('/', (_, res) => {
-    res.send('hello world!!!');
+// req -> what client send to me(for exp. from frontend || query) && res -> what i will send to client
+app.get('/', (req, res) => {
+    res.send({
+        success: true,
+        message: "hello world!",
+        request: req.query
+    });
 });
 
 app.get('/posts', PostController.getAll);
@@ -66,10 +91,12 @@ app.get('/auth/me', checkAuth, async (req, res) => {
     }
 });
 
-app.listen(4500, (error) => {
+const port = process.env.PORT || 3200;
+
+app.listen(port, (error) => {
     if (error) {
-        console.log(error);
-    } else {
-        console.log('Server started.');
+        return console.log(error);
     }
+
+    console.log('Server started.');
 });
