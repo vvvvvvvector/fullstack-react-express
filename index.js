@@ -90,7 +90,7 @@ app.get('/auth/me', checkAuth, async (req, res) => {
     }
 });
 
-const port = process.env.PORT || 3200;
+const port = process.env.PORT || 4500;
 
 app.listen(port, (error) => {
     if (error) {
