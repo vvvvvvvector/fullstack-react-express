@@ -7,7 +7,7 @@ import checkAuth from './utils/checkAuth.js';
 
 import { UserController, PostController } from './controllers/index.js';
 
-import { UserModel } from './models/index.js';
+import UserModel from './models/user.js';
 
 const app = express();
 

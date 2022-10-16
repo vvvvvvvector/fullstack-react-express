@@ -1,4 +1,4 @@
-import { PostModel } from "../models/index.js";
+import PostModel from "../models/post.js";
 
 export const update = (req, res) => {
     try {
