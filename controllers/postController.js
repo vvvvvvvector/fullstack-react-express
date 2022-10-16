@@ -1,4 +1,4 @@
-import PostModel from '../models/post.js'
+import { PostModel } from "../models/index.js";
 
 export const update = (req, res) => {
     try {
@@ -9,7 +9,7 @@ export const update = (req, res) => {
         }, async (err, doc) => {
             if (err) {
                 console.log(error);
-                ``
+                
                 return res.status(500).json({
                     success: false,
                     message: "error while finding post."

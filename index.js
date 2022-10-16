@@ -5,10 +5,9 @@ import multer from 'multer';
 import { signUpValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
 
-import * as UserController from './controllers/userController.js';
-import * as PostController from './controllers/postController.js';
+import { UserController, PostController } from './controllers/index.js';
 
-import UserModel from './models/user.js';
+import { UserModel } from './models/index.js';
 
 const app = express();
 

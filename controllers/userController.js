@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import { validationResult } from 'express-validator';
 
-import UserModel from '../models/user.js';
+import { UserModel } from '../models/index.js';
 
 export const signIn = async (req, res) => {
     try {
