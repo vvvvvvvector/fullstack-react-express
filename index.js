@@ -43,7 +43,7 @@ mongoose.connect(
 
 // req -> what client send to me(for exp. from frontend || query) && res -> what i will send to client
 app.get('/', (req, res) => {
-    res.send({
+    res.json({
         success: true,
         message: "hello world!",
         request: req.query
