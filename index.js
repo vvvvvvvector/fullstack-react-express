@@ -1,6 +1,7 @@
 import express from 'express'; // const express = require('express'); package.json -> 'type': 'module'
 import mongoose from 'mongoose';
 import multer from 'multer';
+import dotenv from 'dotenv';
 
 import { signUpValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
@@ -10,6 +11,7 @@ import { UserController, PostController } from './controllers/index.js';
 import UserModel from './models/user.js';
 
 const app = express();
+dotenv.config();
 
 app.use(express.json()); // allows to read json in req
 app.use('/uploads', express.static('uploads')); // not just get request -> it's get request to get a static file
@@ -34,7 +36,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 });
 
 mongoose.connect(
-    'mongodb+srv://vvvvvec1or:adminvector@my-cluster.nvcxdyv.mongodb.net/express-test?retryWrites=true&w=majority'
+    process.env.MONGODB_URL
 ).then(() => {
     console.log('Successfully connected to database');
 }).catch((error) => {
