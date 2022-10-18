@@ -1,9 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import { validationResult } from 'express-validator';
 
 import UserModel from '../models/user.js';
+
+dotenv.config();
 
 export const signIn = async (req, res) => {
     try {
@@ -27,10 +30,12 @@ export const signIn = async (req, res) => {
             });
         }
 
+        const super_secret_key = process.env.SECRET_KEY;
+
         const token = jwt.sign({
             _id: user._id
         },
-            'super-secret-key',
+            super_secret_key,
             {
                 expiresIn: '1d'
             }
