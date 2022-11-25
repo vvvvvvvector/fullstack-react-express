@@ -1,15 +1,61 @@
+import React from "react";
+
+import { Formik, Form } from "formik";
+
+import { TextField, Button } from "@mui/material";
+
 import "./scss/_app.scss";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <>
-      <h1>I am going to try formik in this small proj</h1>
-      <p>Email input</p>
-      <p>Password input</p>
-      <button>Sign in</button>
-      <p>Do not have an account? Sign up</p>
-    </>
+    <div className="wrapper">
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={(data, { setSubmitting }) => {
+          setSubmitting(true);
+
+          // make async call for instance
+
+          setTimeout(() => {
+            console.log("submit: ", data);
+            setSubmitting(false);
+          }, 500);
+        }}
+      >
+        {({ values, isSubmitting, handleChange, handleBlur }) => (
+          <Form>
+            <TextField
+              className="input"
+              name="email"
+              type="email"
+              label="Your email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <TextField
+              className="input"
+              name="password"
+              type="password"
+              label="Your password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Button
+              className="submit"
+              type="submit"
+              disabled={isSubmitting}
+              variant="outlined"
+            >
+              Submit
+            </Button>
+            <pre>{JSON.stringify(values, null, 2)}</pre>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
-}
+};
 
 export default App;
