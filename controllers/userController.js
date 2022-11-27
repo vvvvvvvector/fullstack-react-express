@@ -41,7 +41,7 @@ export const signIn = async (req, res) => {
       },
       super_secret_key,
       {
-        expiresIn: "1d",
+        expiresIn: "5min",
       }
     );
 
@@ -88,7 +88,7 @@ export const signUp = async (req, res) => {
       },
       super_secret_key,
       {
-        expiresIn: "1d",
+        expiresIn: "5min",
       }
     );
 
