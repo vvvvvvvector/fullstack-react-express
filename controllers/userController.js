@@ -33,22 +33,22 @@ export const signIn = async (req, res) => {
       });
     }
 
-    const super_secret_key = process.env.SECRET_KEY;
-
     const token = jwt.sign(
       {
         _id: user._id,
       },
-      super_secret_key,
+      process.env.SECRET_KEY,
       {
         expiresIn: "5min",
       }
     );
 
+    const { password, ...rest } = user._doc;
+
     res.json({
       success: true,
       message: "Signed in successfully.",
-      user,
+      user: rest,
       token,
     });
   } catch (error) {
@@ -69,9 +69,9 @@ export const signUp = async (req, res) => {
       return res.status(400).json(errors.array());
     }
 
-    const password = req.body.password;
+    const inputPassword = req.body.password;
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(inputPassword, salt);
 
     const doc = new UserModel({
       email: req.body.email,
@@ -80,22 +80,22 @@ export const signUp = async (req, res) => {
 
     const user = await doc.save();
 
-    const super_secret_key = process.env.SECRET_KEY;
-
     const token = jwt.sign(
       {
         _id: user._id,
       },
-      super_secret_key,
+      process.env.SECRET_KEY,
       {
         expiresIn: "5min",
       }
     );
 
+    const { password, ...rest } = user._doc;
+
     res.json({
       success: true,
       message: "User was created successfully.",
-      user,
+      user: rest,
       token,
     });
   } catch (error) {
