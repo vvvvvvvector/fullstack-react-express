@@ -69,7 +69,8 @@ export const SignIn: React.FC = () => {
             .then((res) => {
               const { user, token } = res.data;
 
-              setUser({ info: user, token });
+              setUser(user);
+              window.localStorage.setItem("jwt-token", token);
 
               navigate("/");
 

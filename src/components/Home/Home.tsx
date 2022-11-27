@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
           ? "Signed in successfully!"
           : "Sign in to see information about yourself!"}
       </span>
-      {user && <pre>{JSON.stringify(user.info, null, 2)}</pre>}
+      {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
     </div>
   );
 };

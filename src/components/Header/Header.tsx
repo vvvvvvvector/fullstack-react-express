@@ -13,6 +13,11 @@ import styles from "./Header.module.scss";
 export const Header: React.FC = () => {
   const { user, setUser } = useContext(UserContext);
 
+  const onSignOut = () => {
+    setUser(null);
+    window.localStorage.removeItem("jwt-token");
+  };
+
   return (
     <div className={styles.header}>
       <Link to="/">
@@ -24,7 +29,7 @@ export const Header: React.FC = () => {
         </div>
       </Link>
       {user ? (
-        <Button onClick={() => setUser(null)} variant="outlined" color="error">
+        <Button onClick={onSignOut} variant="outlined" color="error">
           Sign out
         </Button>
       ) : (
