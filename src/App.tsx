@@ -26,7 +26,14 @@ const App: React.FC = () => {
           setUser(res.data.user);
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response.status === 403) {
+            alert(
+              "It seems that yours jwt token is expired...\nSign in again to use the app"
+            );
+            window.localStorage.removeItem("jwt-token");
+          } else {
+            console.log(error.message);
+          }
         });
     }
   }, []);
