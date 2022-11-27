@@ -1,14 +1,19 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 
+import { Home } from "./components/Home/Home";
+import { Header } from "./components/Header/Header";
 import { SignIn } from "./components/SignIn/SignIn";
-
-import "./scss/_app.scss";
 
 const App: React.FC = () => {
   return (
-    <div className="wrapper">
-      <SignIn />
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </>
   );
 };
 
