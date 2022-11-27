@@ -92,10 +92,12 @@ app.get("/auth/me", checkAuth, async (req, res) => {
       });
     }
 
+    const { password, ...rest } = user._doc;
+
     res.json({
       success: true,
       message: "authorization was successful.",
-      user,
+      user: rest,
     });
   } catch (error) {
     console.log(error);
