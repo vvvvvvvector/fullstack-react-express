@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import styles from "./Header.module.scss";
-
 import BiotechIcon from "@mui/icons-material/Biotech";
 
+import { UserContext } from "../../context/UserContext";
+
+import styles from "./Header.module.scss";
+
 export const Header: React.FC = () => {
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <div className={styles.header}>
       <Link to="/">
@@ -19,12 +23,18 @@ export const Header: React.FC = () => {
           </h3>
         </div>
       </Link>
-      <Stack spacing={3} direction="row">
-        <Link to="/signin">
-          <Button variant="outlined">Sign in</Button>
-        </Link>
-        <Button variant="outlined">Sign up</Button>
-      </Stack>
+      {user ? (
+        <Button onClick={() => setUser(null)} variant="outlined" color="error">
+          Sign out
+        </Button>
+      ) : (
+        <Stack spacing={3} direction="row">
+          <Link to="/signin">
+            <Button variant="outlined">Sign in</Button>
+          </Link>
+          <Button variant="outlined">Sign up</Button>
+        </Stack>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -9,6 +10,19 @@ import * as yup from "yup";
 import { TextField, Button, FormControlLabel, Checkbox } from "@mui/material";
 
 import styles from "./SignIn.module.scss";
+
+import { UserContext } from "../../context/UserContext";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .required("Email is a required field!")
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "It isn't an email address!"),
+  password: yup
+    .string()
+    .required("You must have a password!")
+    .min(5, "Weak password!"),
+});
 
 type MyTextFieldType = { type: string; label: string } & FieldAttributes<{}>;
 
@@ -34,18 +48,11 @@ const MyTextField: React.FC<MyTextFieldType> = ({ type, label, ...props }) => {
   );
 };
 
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .required("Email is a required field!")
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "It isn't an email address!"),
-  password: yup
-    .string()
-    .required("You must have a password!")
-    .min(5, "Weak password!"),
-});
-
 export const SignIn: React.FC = () => {
+  const navigate = useNavigate();
+
+  const { setUser } = useContext(UserContext);
+
   return (
     <div className={styles["form-wrapper"]}>
       <Formik
@@ -60,6 +67,12 @@ export const SignIn: React.FC = () => {
               password: data.password,
             })
             .then((res) => {
+              const { user, token } = res.data;
+
+              setUser({ info: user, token });
+
+              navigate("/");
+
               console.log(JSON.stringify(res.data, null, 2));
             })
             .catch((err) => {
