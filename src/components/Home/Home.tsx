@@ -8,21 +8,35 @@ import { Post } from "../Post/Post";
 
 import { UserContext } from "../../context/UserContext";
 
-import { FetchPostType } from "../../common/types";
+import { PostType } from "../../common/types";
 
 import styles from "./Home.module.scss";
 
 export const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
-  const [posts, setPosts] = React.useState<FetchPostType[]>([]);
+  const [posts, setPosts] = React.useState<PostType[]>([]);
 
   React.useEffect(() => {
-    const fetchAllPosts = async () => {
-      await axios
+    const fetchAllPosts = () => {
+      axios
         .get("http://localhost:4500/posts")
         .then((res) => {
-          setPosts(res.data.posts);
+          const result: PostType[] = [];
+
+          for (let i = 0; i < res.data.posts.length; i++) {
+            result.push({
+              id: res.data.posts[i]._id,
+              userEmail: res.data.posts[i].user.email,
+              createdAt: res.data.posts[i].createdAt,
+              title: res.data.posts[i].title,
+              text: res.data.posts[i].text,
+              tags: res.data.posts[i].tags,
+              views: res.data.posts[i].viewsCount,
+            });
+
+            setPosts(result);
+          }
         })
         .catch((error) => {
           console.log(error.message);
@@ -34,26 +48,26 @@ export const Home: React.FC = () => {
 
   return (
     <div className={styles.home}>
-      <h1>{user ? `Hello ${user.email}` : "Home page!"}</h1>
+      <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
       {user ? (
         <div className={styles["after-header"]}>
           <span>Signed in successfully!</span>
-          <Button variant="contained">Add a new post</Button>
+          <Button
+            onClick={() => console.log("hello world!")}
+            variant="contained"
+          >
+            Add a new post
+          </Button>
         </div>
       ) : (
-        <span>Sign in to see information about yourself!</span>
+        <span>
+          {
+            "Sign in if you want to create/delete/update[not now -> mb in future] posts!"
+          }
+        </span>
       )}
       {posts.map((item, index) => (
-        <Post
-          key={index}
-          id={item._id}
-          userEmail={item.user.email}
-          createdAt={item.createdAt}
-          title={item.title}
-          text={item.text}
-          tags={item.tags}
-          views={item.viewsCount}
-        />
+        <Post key={index} {...item} />
       ))}
     </div>
   );

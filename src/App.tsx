@@ -17,8 +17,8 @@ const App: React.FC = () => {
   React.useEffect(() => {
     const token = window.localStorage.getItem("jwt-token");
 
-    const fetchAuthMe = async () => {
-      await axios
+    const fetchAuthMe = () => {
+      axios
         .get("http://localhost:4500/auth/me", {
           headers: {
             Authorization: "Bearer " + token,
@@ -32,6 +32,8 @@ const App: React.FC = () => {
             alert(
               "It seems that yours jwt token is expired...\nSign in again to use the app"
             );
+
+            setUser(null);
             window.localStorage.removeItem("jwt-token");
           } else {
             console.log(error.message);

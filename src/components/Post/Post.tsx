@@ -1,9 +1,10 @@
 import React from "react";
-import { ComponentPostType } from "../../common/types";
+
+import { PostType } from "../../common/types";
 
 import styles from "./Post.module.scss";
 
-export const Post: React.FC<ComponentPostType> = (props) => {
+export const Post: React.FC<PostType> = (props) => {
   const formatDate = (createdAt: string) => {
     const d = new Date(createdAt);
 
