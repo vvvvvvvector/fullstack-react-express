@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 
 import axios from "axios";
 
+import { Button } from "@mui/material";
+
 import { Post } from "../Post/Post";
 
 import { UserContext } from "../../context/UserContext";
@@ -33,14 +35,18 @@ export const Home: React.FC = () => {
   return (
     <div className={styles.home}>
       <h1>{user ? `Hello ${user.email}` : "Home page!"}</h1>
-      <span>
-        {user
-          ? "Signed in successfully!"
-          : "Sign in to see information about yourself!"}
-      </span>
+      {user ? (
+        <div className={styles["after-header"]}>
+          <span>Signed in successfully!</span>
+          <Button variant="contained">Add a new post</Button>
+        </div>
+      ) : (
+        <span>Sign in to see information about yourself!</span>
+      )}
       {posts.map((item, index) => (
         <Post
           key={index}
+          id={item._id}
           userEmail={item.user.email}
           createdAt={item.createdAt}
           title={item.title}

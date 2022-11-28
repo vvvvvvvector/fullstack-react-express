@@ -7,10 +7,12 @@ import { Home } from "./components/Home/Home";
 import { Header } from "./components/Header/Header";
 import { SignIn } from "./components/SignIn/SignIn";
 
+import { UserType } from "./common/types";
+
 import { UserContext } from "./context/UserContext";
 
 const App: React.FC = () => {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState<UserType>(null);
 
   React.useEffect(() => {
     const token = window.localStorage.getItem("jwt-token");
