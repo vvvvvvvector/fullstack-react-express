@@ -15,8 +15,8 @@ const App: React.FC = () => {
   React.useEffect(() => {
     const token = window.localStorage.getItem("jwt-token");
 
-    if (token) {
-      axios
+    const fetchAuthMe = async () => {
+      await axios
         .get("http://localhost:4500/auth/me", {
           headers: {
             Authorization: "Bearer " + token,
@@ -35,6 +35,10 @@ const App: React.FC = () => {
             console.log(error.message);
           }
         });
+    };
+
+    if (token) {
+      fetchAuthMe();
     }
   }, []);
 

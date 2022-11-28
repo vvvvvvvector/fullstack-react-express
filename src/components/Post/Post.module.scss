@@ -1,0 +1,39 @@
+.post-wrapper {
+  margin-top: 20px;
+  padding: 30px;
+  background-color: white;
+  border: 1px solid #ededed;
+
+  b {
+    display: block;
+    margin-bottom: 7px;
+  }
+
+  .created-at {
+    color: grey;
+    margin-bottom: 7px;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  p {
+    margin-bottom: 7px;
+  }
+
+  ul {
+    color: grey;
+    display: flex;
+    margin-bottom: 7px;
+
+    li {
+      margin-right: 15px;
+    }
+  }
+
+  span {
+    color: grey;
+  }
+}
