@@ -8,15 +8,23 @@ export const Post: React.FC<PostType> = (props) => {
   const formatDate = (createdAt: string) => {
     const d = new Date(createdAt);
 
-    const result: string = `${d.getFullYear()}-${d.getMonth()}-${d.getDay()} ${d.getHours()}:${d.getMinutes()}`;
+    const fullYear = d.getFullYear();
+    const month = d.getMonth();
+    const day = d.getDay();
+    const hours = d.getHours();
+    const minutes = d.getMinutes();
 
-    return result;
+    const dateAndTime: string = `${day < 10 ? "0" + day : day}-${
+      month < 10 ? "0" + month : month
+    }-${fullYear} at ${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+
+    return dateAndTime;
   };
 
   return (
     <div className={styles["post-wrapper"]}>
       <b>{props.userEmail}</b>
-      <p className={styles["created-at"]}>{`Created at: ${formatDate(
+      <p className={styles["created-at"]}>{`Created: ${formatDate(
         props.createdAt
       )}`}</p>
       <h2>{props.title}</h2>
@@ -26,7 +34,7 @@ export const Post: React.FC<PostType> = (props) => {
           ? props.tags.map((item, index) => <li key={index}>{`#${item}`}</li>)
           : "no tags :("}
       </ul>
-      <span>{`views: ${props.views}`}</span>
+      <span>{`Views: ${props.views}`}</span>
     </div>
   );
 };

@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const onSignOut = () => {
+  const handleSignOut = () => {
     setUser(null);
     window.localStorage.removeItem("jwt-token");
     navigate("/");
@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
         </div>
       </Link>
       {user ? (
-        <Button onClick={onSignOut} variant="outlined" color="error">
+        <Button onClick={handleSignOut} variant="outlined" color="error">
           Sign out
         </Button>
       ) : (

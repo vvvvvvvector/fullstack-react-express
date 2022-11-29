@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import axios from "axios";
 
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 import { Post } from "../Post/Post";
 
@@ -16,6 +16,7 @@ import styles from "./Home.module.scss";
 export const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
+  const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState<PostType[]>([]);
 
   React.useEffect(() => {
@@ -37,6 +38,8 @@ export const Home: React.FC = () => {
             });
 
             setPosts(result);
+
+            setLoading(false);
           }
         })
         .catch((error) => {
@@ -64,9 +67,13 @@ export const Home: React.FC = () => {
           }
         </span>
       )}
-      {posts.map((item, index) => (
-        <Post key={index} {...item} />
-      ))}
+      {loading ? (
+        <div className={styles.loading}>
+          <CircularProgress size="5rem" />
+        </div>
+      ) : (
+        posts.map((item, index) => <Post key={index} {...item} />)
+      )}
     </div>
   );
 };
