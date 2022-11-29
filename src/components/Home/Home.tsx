@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 
@@ -52,12 +53,9 @@ export const Home: React.FC = () => {
       {user ? (
         <div className={styles["after-header"]}>
           <span>Signed in successfully!</span>
-          <Button
-            onClick={() => console.log("hello world!")}
-            variant="contained"
-          >
-            Add a new post
-          </Button>
+          <Link to="/newpost">
+            <Button variant="contained">Add a new post</Button>
+          </Link>
         </div>
       ) : (
         <span>

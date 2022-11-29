@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -13,9 +13,12 @@ import styles from "./Header.module.scss";
 export const Header: React.FC = () => {
   const { user, setUser } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
   const onSignOut = () => {
     setUser(null);
     window.localStorage.removeItem("jwt-token");
+    navigate("/");
   };
 
   return (

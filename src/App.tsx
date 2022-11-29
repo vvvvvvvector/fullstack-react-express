@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -10,9 +10,12 @@ import { SignIn } from "./components/SignIn/SignIn";
 import { UserType } from "./common/types";
 
 import { UserContext } from "./context/UserContext";
+import { NewPost } from "./components/NewPost/NewPost";
 
 const App: React.FC = () => {
   const [user, setUser] = React.useState<UserType>(null);
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const token = window.localStorage.getItem("jwt-token");
@@ -35,6 +38,7 @@ const App: React.FC = () => {
 
             setUser(null);
             window.localStorage.removeItem("jwt-token");
+            navigate("/");
           } else {
             console.log(error.message);
           }
@@ -53,6 +57,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/newpost" element={<NewPost />} />
         </Routes>
       </UserContext.Provider>
     </>
