@@ -1,28 +1,21 @@
 import React from "react";
 
+import axios from "axios";
+
+import { formatDate } from "../../common/utils";
 import { PostType } from "../../common/types";
 
 import styles from "./Post.module.scss";
 
 export const Post: React.FC<PostType> = (props) => {
-  const formatDate = (createdAt: string) => {
-    const d = new Date(createdAt);
-
-    const fullYear = d.getFullYear();
-    const month = d.getMonth();
-    const day = d.getDay();
-    const hours = d.getHours();
-    const minutes = d.getMinutes();
-
-    const dateAndTime: string = `${day < 10 ? "0" + day : day}-${
-      month < 10 ? "0" + month : month
-    }-${fullYear} at ${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
-
-    return dateAndTime;
+  const handleOnPostClick = () => {
+    axios.get(`http://localhost:4500/posts/${props.id}`).catch((error) => {
+      console.log(error);
+    });
   };
 
   return (
-    <div className={styles["post-wrapper"]}>
+    <div onClick={handleOnPostClick} className={styles["post-wrapper"]}>
       <b>{props.userEmail}</b>
       <p className={styles["created-at"]}>{`Created: ${formatDate(
         props.createdAt

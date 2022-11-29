@@ -9,9 +9,9 @@ import * as yup from "yup";
 
 import { TextField, Button, FormControlLabel, Checkbox } from "@mui/material";
 
-import styles from "./SignIn.module.scss";
-
 import { UserContext } from "../../context/UserContext";
+
+import styles from "./SignIn.module.scss";
 
 const validationSchema = yup.object({
   email: yup
