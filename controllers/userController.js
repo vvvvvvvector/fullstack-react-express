@@ -39,7 +39,7 @@ export const signIn = async (req, res) => {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: "5min",
+        expiresIn: "30min",
       }
     );
 
@@ -86,7 +86,7 @@ export const signUp = async (req, res) => {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: "5min",
+        expiresIn: "30min",
       }
     );
 
