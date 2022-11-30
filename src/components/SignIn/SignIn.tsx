@@ -9,7 +9,7 @@ import * as yup from "yup";
 
 import { TextField, Button, FormControlLabel, Checkbox } from "@mui/material";
 
-import { UserContext } from "../../context/UserContext";
+import UserContext from "../../context/UserContext";
 
 import styles from "./SignIn.module.scss";
 
@@ -48,7 +48,7 @@ const MyTextField: React.FC<MyTextFieldType> = ({ type, label, ...props }) => {
   );
 };
 
-export const SignIn: React.FC = () => {
+const SignIn: React.FC = () => {
   const navigate = useNavigate();
 
   const { setUser } = useContext(UserContext);
@@ -119,3 +119,5 @@ export const SignIn: React.FC = () => {
     </div>
   );
 };
+
+export default SignIn;

@@ -3,13 +3,13 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { Home } from "./components/Home/Home";
-import { Header } from "./components/Header/Header";
-import { SignIn } from "./components/SignIn/SignIn";
+import Home from "./components/Home/Home";
+import Header from "./components/Header/Header";
+import SignIn from "./components/SignIn/SignIn";
 
 import { UserType } from "./common/types";
 
-import { UserContext } from "./context/UserContext";
+import UserContext from "./context/UserContext";
 import { NewPost } from "./components/NewPost/NewPost";
 
 const App: React.FC = () => {

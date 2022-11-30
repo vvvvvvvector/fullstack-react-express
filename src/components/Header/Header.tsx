@@ -6,12 +6,12 @@ import { Stack } from "@mui/system";
 
 import BiotechIcon from "@mui/icons-material/Biotech";
 
-import { UserContext } from "../../context/UserContext";
+import UserContext from "../../context/UserContext";
 
 import styles from "./Header.module.scss";
 
-export const Header: React.FC = () => {
-  const { user, setUser } = useContext(UserContext);
+const Header: React.FC = () => {
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
           </h3>
         </div>
       </Link>
-      {user ? (
+      {window.localStorage.getItem("jwt-token") ? (
         <Button onClick={handleSignOut} variant="outlined" color="error">
           Sign out
         </Button>
@@ -46,3 +46,5 @@ export const Header: React.FC = () => {
     </div>
   );
 };
+
+export default Header;

@@ -10,9 +10,9 @@ import { PostType } from "../../common/types";
 
 import styles from "./Post.module.scss";
 
-import { UserContext } from "../../context/UserContext";
+import UserContext from "../../context/UserContext";
 
-export const Post: React.FC<PostType> = ({
+const Post: React.FC<PostType> = ({
   id,
   userEmail,
   createdAt,
@@ -75,3 +75,5 @@ export const Post: React.FC<PostType> = ({
     </div>
   );
 };
+
+export default Post;

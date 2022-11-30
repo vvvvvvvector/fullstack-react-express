@@ -5,15 +5,15 @@ import axios from "axios";
 
 import { Button, CircularProgress } from "@mui/material";
 
-import { Post } from "../Post/Post";
+import Post from "../Post/Post";
 
-import { UserContext } from "../../context/UserContext";
+import UserContext from "../../context/UserContext";
 
 import { PostType } from "../../common/types";
 
 import styles from "./Home.module.scss";
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
   const [loading, setLoading] = React.useState(true);
@@ -58,7 +58,7 @@ export const Home: React.FC = () => {
   return (
     <div className={styles.home}>
       <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
-      {user ? (
+      {window.localStorage.getItem("jwt-token") ? (
         <div className={styles["after-header"]}>
           <span>Signed in successfully!</span>
           <Link to="/newpost">
@@ -78,3 +78,5 @@ export const Home: React.FC = () => {
     </div>
   );
 };
+
+export default Home;
