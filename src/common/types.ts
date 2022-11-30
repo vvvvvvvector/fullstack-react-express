@@ -11,4 +11,5 @@ export interface PostType {
   text: string;
   tags: string[];
   views: number;
+  onRemovePost: (postToRemoveId: string) => void;
 }

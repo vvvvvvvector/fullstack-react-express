@@ -35,6 +35,7 @@ export const Home: React.FC = () => {
               text: res.data.posts[i].text,
               tags: res.data.posts[i].tags,
               views: res.data.posts[i].viewsCount,
+              onRemovePost: handleRemovePost,
             });
 
             setPosts(result);
@@ -50,6 +51,10 @@ export const Home: React.FC = () => {
     fetchAllPosts();
   }, []);
 
+  const handleRemovePost = (postToRemoveId: string) => {
+    setPosts((prev) => prev.filter((post) => post.id !== postToRemoveId));
+  };
+
   return (
     <div className={styles.home}>
       <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
@@ -61,11 +66,7 @@ export const Home: React.FC = () => {
           </Link>
         </div>
       ) : (
-        <span>
-          {
-            "Sign in if you want to create/delete/update[not now -> mb in future] posts!"
-          }
-        </span>
+        <span>{"Sign in if you want to create your post posts!"}</span>
       )}
       {loading ? (
         <div className={styles.loading}>
