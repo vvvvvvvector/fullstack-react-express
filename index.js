@@ -20,7 +20,7 @@ app.use("/uploads", express.static("uploads")); // not just get request -> it's 
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST, DELETE");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
