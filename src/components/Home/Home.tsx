@@ -66,7 +66,7 @@ const Home: React.FC = () => {
           </Link>
         </div>
       ) : (
-        <span>{"Sign in if you want to create your post posts!"}</span>
+        <span>{"Sign in if you want to create your posts!"}</span>
       )}
       {loading ? (
         <div className={styles.loading}>

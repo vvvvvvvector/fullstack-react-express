@@ -25,9 +25,20 @@ const Post: React.FC<PostType> = ({
   const { user } = useContext(UserContext);
 
   const handleOnPostClick = () => {
-    axios.get(`http://localhost:4500/posts/${id}`).catch((error) => {
-      console.log(error.message);
-    });
+    axios
+      .get(`http://localhost:4500/posts/${id}`)
+      .then(() => {
+        alert(
+          `you have opened the post: ${JSON.stringify(
+            { id, userEmail, createdAt, title, text, tags, views },
+            null,
+            2
+          )}`
+        );
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const handleDeleteClick = () => {
