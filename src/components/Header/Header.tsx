@@ -15,11 +15,6 @@ const Header: React.FC = () => {
   const handleSignOut = () => {
     setUser(null);
     window.localStorage.removeItem("jwt-token");
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
   };
 
   return (

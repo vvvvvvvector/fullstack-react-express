@@ -19,4 +19,23 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .scroll {
+    cursor: pointer;
+    position: fixed;
+    bottom: 30px;
+    right: 50px;
+    color: white;
+    padding: 15px;
+    background-color: #00e300;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: darken(#00e300, 7%);
+    }
+
+    &:active {
+      background-color: darken(#00e300, 11%);
+    }
+  }
 }

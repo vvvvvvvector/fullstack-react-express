@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
+
+import { scrollToTop } from "../../common/utils";
 
 import { Button, CircularProgress } from "@mui/material";
 
@@ -18,6 +20,20 @@ const Home: React.FC = () => {
 
   const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState<PostType[]>([]);
+
+  const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);
+
+  window.addEventListener("scroll", () => {
+    const scrolled = document.documentElement.scrollTop;
+
+    const max = 200;
+
+    if (scrolled > max) {
+      setScrollToTopVisible(true);
+    } else if (scrolled <= max) {
+      setScrollToTopVisible(false);
+    }
+  });
 
   React.useEffect(() => {
     const fetchAllPosts = () => {
@@ -74,6 +90,11 @@ const Home: React.FC = () => {
         </div>
       ) : (
         posts.map((item, index) => <Post key={index} {...item} />)
+      )}
+      {scrollToTopVisible && (
+        <div onClick={scrollToTop} className={styles.scroll}>
+          scroll up
+        </div>
       )}
     </div>
   );

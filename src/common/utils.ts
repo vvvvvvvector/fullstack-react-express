@@ -13,3 +13,11 @@ export const formatDate = (createdAt: string) => {
 
   return dateAndTime;
 };
+
+export const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
+};
