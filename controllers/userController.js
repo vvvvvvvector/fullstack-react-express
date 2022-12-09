@@ -8,6 +8,35 @@ import UserModel from "../models/user.js";
 
 dotenv.config();
 
+export const authMe = async (req, res) => {
+  try {
+    // here is the code we are protecting
+    const user = await UserModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "user not found.",
+      });
+    }
+
+    const { password, ...rest } = user._doc;
+
+    res.json({
+      success: true,
+      message: "authorization was successful.",
+      user: rest,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "error while getting user.",
+    });
+  }
+};
+
 export const signIn = async (req, res) => {
   try {
     const user = await UserModel.findOne({
