@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
@@ -14,12 +14,15 @@ import UserContext from "../../context/UserContext";
 import { PostType } from "../../common/types";
 
 import styles from "./Home.module.scss";
+import { Stack } from "@mui/system";
 
 const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
   const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState<PostType[]>([]);
+
+  const [isUserPosts, setIsUserPosts] = React.useState(false);
 
   const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);
 
@@ -71,15 +74,35 @@ const Home: React.FC = () => {
     setPosts((prev) => prev.filter((post) => post.id !== postToRemoveId));
   };
 
+  const renderPosts = () => {
+    if (isUserPosts) {
+      return posts.map((item, index) => {
+        if (item.userEmail === user?.email) {
+          return <Post key={index} {...item} />;
+        }
+      });
+    }
+
+    return posts.map((item, index) => <Post key={index} {...item} />);
+  };
+
   return (
     <div className={styles.home}>
       <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
       {window.localStorage.getItem("jwt-token") ? (
         <div className={styles["after-header"]}>
           <span>Signed in successfully!</span>
-          <Link to="/newpost">
-            <Button variant="contained">Add a new post</Button>
-          </Link>
+          <Stack direction={"row"} gap={2}>
+            <Button
+              onClick={() => setIsUserPosts(!isUserPosts)}
+              variant="contained"
+            >
+              {isUserPosts ? "Show all posts" : "Show my posts"}
+            </Button>
+            <Link to="/newpost">
+              <Button variant="contained">Add a new post</Button>
+            </Link>
+          </Stack>
         </div>
       ) : (
         <span>{"Sign in if you want to create your posts!"}</span>
@@ -89,11 +112,11 @@ const Home: React.FC = () => {
           <CircularProgress size="5rem" />
         </div>
       ) : (
-        posts.map((item, index) => <Post key={index} {...item} />)
+        renderPosts()
       )}
       {scrollToTopVisible && (
         <div onClick={scrollToTop} className={styles.scroll}>
-          scroll up
+          scroll to top
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@ export type UserType = {
   email: string;
 } | null;
 
-export interface PostType {
+export type PostType = {
   id: string;
   userEmail: string;
   createdAt: string;
