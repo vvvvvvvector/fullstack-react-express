@@ -5,7 +5,13 @@ import axios from "axios";
 
 import { scrollToTop } from "../../common/utils";
 
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
+import { Stack } from "@mui/system";
 
 import Post from "../Post/Post";
 
@@ -14,7 +20,6 @@ import UserContext from "../../context/UserContext";
 import { PostType } from "../../common/types";
 
 import styles from "./Home.module.scss";
-import { Stack } from "@mui/system";
 
 const Home: React.FC = () => {
   const { user } = useContext(UserContext);
@@ -93,12 +98,10 @@ const Home: React.FC = () => {
         <div className={styles["after-header"]}>
           <span>Signed in successfully!</span>
           <Stack direction={"row"} gap={2}>
-            <Button
-              onClick={() => setIsUserPosts(!isUserPosts)}
-              variant="contained"
-            >
-              {isUserPosts ? "Show all posts" : "Show my posts"}
-            </Button>
+            <FormControlLabel
+              control={<Switch onChange={() => setIsUserPosts(!isUserPosts)} />}
+              label={isUserPosts ? "Show all posts" : "Show my posts"}
+            />
             <Link to="/newpost">
               <Button variant="contained">Add a new post</Button>
             </Link>
