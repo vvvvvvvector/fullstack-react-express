@@ -9,26 +9,21 @@ import UserContext from "../../context/UserContext";
 
 import styles from "./Header.module.scss";
 
+import { scrollToTop } from "../../common/utils";
+
 const Header: React.FC = () => {
   const { setUser } = useContext(UserContext);
 
   const handleSignOut = () => {
     setUser(null);
     window.localStorage.removeItem("jwt-token");
+    scrollToTop();
   };
 
   return (
     <div className={styles.header}>
       <Link to="/">
-        <div
-          onClick={() =>
-            window.scrollTo({
-              top: 0,
-              left: 0,
-              behavior: "smooth",
-            })
-          }
-        >
+        <div>
           <BiotechIcon sx={{ color: "#28282B" }} fontSize="large" />
           <h3>
             My beautiful app <span>🤯</span>
