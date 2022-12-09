@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import { formatDate } from "../../common/utils";
 import { PostType } from "../../common/types";
@@ -69,11 +70,16 @@ const Post: React.FC<PostType> = ({
           ? tags.map((item, index) => <li key={index}>{`#${item}`}</li>)
           : "no tags :("}
       </ul>
-      <span>{`Views: ${views}`}</span>
+      <div className={styles.views}>
+        <VisibilityOutlinedIcon sx={{ color: "grey" }} />
+        <span>{`${views}`}</span>
+      </div>
       {userEmail === user?.email && (
         <Button
           sx={{
-            marginTop: "15px",
+            position: "absolute",
+            top: "30px",
+            right: "30px",
           }}
           onClick={handleDeleteClick}
           endIcon={<DeleteIcon color="error" />}

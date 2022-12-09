@@ -21,21 +21,36 @@
   }
 
   .scroll {
+    display: flex;
+    gap: 7px;
+    align-items: center;
     cursor: pointer;
+    background-color: transparent;
+    border: 2px solid #22c55e;
     position: fixed;
     bottom: 30px;
-    right: 50px;
-    color: white;
+    right: 25px;
+    color: #22c55e;
     padding: 15px;
-    background-color: #00e300;
     border-radius: 10px;
+    transition: all 0.12s ease-in-out;
+
+    span {
+      font-size: 18px;
+    }
 
     &:hover {
-      background-color: darken(#00e300, 7%);
+      background-color: #22c55e;
+      color: white;
+
+      .arrow {
+        transform: translateY(-3px);
+      }
     }
 
     &:active {
-      background-color: darken(#00e300, 11%);
+      background-color: darken(#22c55e, 11%);
+      border-color: darken(#22c55e, 11%);
     }
   }
 }

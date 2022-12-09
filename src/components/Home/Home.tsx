@@ -12,6 +12,7 @@ import {
   Switch,
 } from "@mui/material";
 import { Stack } from "@mui/system";
+import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
 
 import Post from "../Post/Post";
 
@@ -119,7 +120,8 @@ const Home: React.FC = () => {
       )}
       {scrollToTopVisible && (
         <div onClick={scrollToTop} className={styles.scroll}>
-          scroll to top
+          <span>scroll to top</span>
+          <NorthOutlinedIcon className={styles.arrow} fontSize="small"/>
         </div>
       )}
     </div>
