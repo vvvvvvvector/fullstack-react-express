@@ -6,11 +6,15 @@ import axios from "axios";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import SignIn from "./components/SignIn/SignIn";
+import { NewPost } from "./components/NewPost/NewPost";
 
 import { UserType } from "./common/types";
 
 import UserContext from "./context/UserContext";
-import { NewPost } from "./components/NewPost/NewPost";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const [user, setUser] = React.useState<UserType>(null);
@@ -51,7 +55,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <UserContext.Provider value={{ user, setUser }}>
         <Header />
         <Routes>
@@ -60,7 +64,7 @@ const App: React.FC = () => {
           <Route path="/newpost" element={<NewPost />} />
         </Routes>
       </UserContext.Provider>
-    </>
+    </QueryClientProvider>
   );
 };
 

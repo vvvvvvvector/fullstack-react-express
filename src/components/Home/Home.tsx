@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import axios from "axios";
-
 import { scrollToTop } from "../../common/utils";
 
 import {
@@ -18,18 +16,15 @@ import Post from "../Post/Post";
 
 import UserContext from "../../context/UserContext";
 
-import { PostType } from "../../common/types";
-
 import styles from "./Home.module.scss";
+
+import { useQuery } from "react-query";
+import { fetchAllPosts } from "../../fetchers/posts";
 
 const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
-  const [loading, setLoading] = React.useState(true);
-  const [posts, setPosts] = React.useState<PostType[]>([]);
-
   const [isUserPosts, setIsUserPosts] = React.useState(false);
-
   const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);
 
   window.addEventListener("scroll", () => {
@@ -44,47 +39,20 @@ const Home: React.FC = () => {
     }
   });
 
-  React.useEffect(() => {
-    const fetchAllPosts = () => {
-      axios
-        .get("http://localhost:4500/posts")
-        .then((res) => {
-          const result: PostType[] = [];
-
-          for (let i = 0; i < res.data.posts.length; i++) {
-            result.push({
-              id: res.data.posts[i]._id,
-              userEmail: res.data.posts[i].user.email,
-              createdAt: res.data.posts[i].createdAt,
-              title: res.data.posts[i].title,
-              text: res.data.posts[i].text,
-              tags: res.data.posts[i].tags,
-              views: res.data.posts[i].viewsCount,
-            });
-
-            setPosts(result);
-
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    };
-
-    fetchAllPosts();
-  }, []);
+  const { data, isLoading } = useQuery(["posts"], fetchAllPosts);
 
   const renderPosts = () => {
     if (isUserPosts) {
-      return posts.map((item, index) => {
+      return data?.map((item: any, index: number) => {
         if (item.userEmail === user?.email) {
           return <Post key={index} {...item} />;
         }
       });
     }
 
-    return posts.map((item, index) => <Post key={index} {...item} />);
+    return data?.map((item: any, index: number) => (
+      <Post key={index} {...item} />
+    ));
   };
 
   return (
@@ -106,7 +74,7 @@ const Home: React.FC = () => {
       ) : (
         <span>{"Sign in if you want to create your posts!"}</span>
       )}
-      {loading ? (
+      {isLoading ? (
         <div className={styles.loading}>
           <CircularProgress size="5rem" />
         </div>
