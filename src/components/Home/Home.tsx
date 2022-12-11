@@ -60,7 +60,6 @@ const Home: React.FC = () => {
               text: res.data.posts[i].text,
               tags: res.data.posts[i].tags,
               views: res.data.posts[i].viewsCount,
-              onRemovePost: handleRemovePost,
             });
 
             setPosts(result);
@@ -75,10 +74,6 @@ const Home: React.FC = () => {
 
     fetchAllPosts();
   }, []);
-
-  const handleRemovePost = (postToRemoveId: string) => {
-    setPosts((prev) => prev.filter((post) => post.id !== postToRemoveId));
-  };
 
   const renderPosts = () => {
     if (isUserPosts) {
@@ -121,7 +116,7 @@ const Home: React.FC = () => {
       {scrollToTopVisible && (
         <div onClick={scrollToTop} className={styles.scroll}>
           <span>scroll to top</span>
-          <NorthOutlinedIcon className={styles.arrow} fontSize="small"/>
+          <NorthOutlinedIcon className={styles.arrow} fontSize="small" />
         </div>
       )}
     </div>

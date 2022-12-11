@@ -21,7 +21,6 @@ const Post: React.FC<PostType> = ({
   text,
   tags,
   views,
-  onRemovePost,
 }) => {
   const { user } = useContext(UserContext);
 
@@ -36,21 +35,6 @@ const Post: React.FC<PostType> = ({
             2
           )}`
         );
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  const handleDeleteClick = () => {
-    axios
-      .delete(`http://localhost:4500/posts/${id}`, {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("jwt-token")}`,
-        },
-      })
-      .then(() => {
-        onRemovePost(id);
       })
       .catch((error) => {
         console.log(error.message);
@@ -81,7 +65,6 @@ const Post: React.FC<PostType> = ({
             top: "30px",
             right: "30px",
           }}
-          onClick={handleDeleteClick}
           endIcon={<DeleteIcon color="error" />}
           color="error"
           variant="outlined"
