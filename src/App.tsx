@@ -12,6 +12,7 @@ import { UserType } from "./common/types";
 
 import UserContext from "./context/UserContext";
 
+import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
@@ -64,6 +65,7 @@ const App: React.FC = () => {
           <Route path="/newpost" element={<NewPost />} />
         </Routes>
       </UserContext.Provider>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );
 };

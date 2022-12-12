@@ -27,19 +27,7 @@ const Home: React.FC = () => {
   const [isUserPosts, setIsUserPosts] = React.useState(false);
   const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);
 
-  window.addEventListener("scroll", () => {
-    const scrolled = document.documentElement.scrollTop;
-
-    const max = 200;
-
-    if (scrolled > max) {
-      setScrollToTopVisible(true);
-    } else if (scrolled <= max) {
-      setScrollToTopVisible(false);
-    }
-  });
-
-  const { data, isLoading } = useQuery(["posts"], fetchAllPosts);
+  const { isLoading, data } = useQuery(["posts"], fetchAllPosts);
 
   const renderPosts = () => {
     if (isUserPosts) {
@@ -54,6 +42,18 @@ const Home: React.FC = () => {
       <Post key={index} {...item} />
     ));
   };
+
+  window.addEventListener("scroll", () => {
+    const scrolled = document.documentElement.scrollTop;
+
+    const max = 200;
+
+    if (scrolled > max) {
+      setScrollToTopVisible(true);
+    } else if (scrolled <= max) {
+      setScrollToTopVisible(false);
+    }
+  });
 
   return (
     <div className={styles.home}>
