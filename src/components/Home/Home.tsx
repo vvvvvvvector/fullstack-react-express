@@ -59,7 +59,7 @@ const Home: React.FC = () => {
       <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
       {window.localStorage.getItem("jwt-token") ? (
         <div className={styles["after-header"]}>
-          <span>Signed in successfully!</span>
+          <span>You are welcome!</span>
           <Stack direction={"row"} gap={2}>
             <FormControlLabel
               control={<Switch onChange={() => setIsUserPosts(!isUserPosts)} />}

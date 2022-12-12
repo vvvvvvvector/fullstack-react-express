@@ -12,6 +12,7 @@ import { PostType } from "../../common/types";
 import styles from "./Post.module.scss";
 
 import UserContext from "../../context/UserContext";
+import { toast } from "react-hot-toast";
 
 const Post: React.FC<PostType> = ({
   id,
@@ -28,13 +29,9 @@ const Post: React.FC<PostType> = ({
     axios
       .get(`http://localhost:4500/posts/${id}`)
       .then(() => {
-        alert(
-          `you have opened the post: ${JSON.stringify(
-            { id, userEmail, createdAt, title, text, tags, views },
-            null,
-            2
-          )}`
-        );
+        toast.success(`you have opened the post: ${id}`, {
+          position: "top-center",
+        });
       })
       .catch((error) => {
         console.log(error.message);

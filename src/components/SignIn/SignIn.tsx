@@ -13,6 +13,7 @@ import UserContext from "../../context/UserContext";
 import validationSchema from "./validations";
 
 import styles from "./SignIn.module.scss";
+import { toast } from "react-hot-toast";
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -37,6 +38,8 @@ const SignIn: React.FC = () => {
 
               setUser(user);
               window.localStorage.setItem("jwt-token", token);
+
+              toast.success("Signed in successfully!");
 
               navigate("/");
 

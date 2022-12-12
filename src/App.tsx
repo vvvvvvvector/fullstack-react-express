@@ -14,6 +14,8 @@ import UserContext from "./context/UserContext";
 
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { TonalitySharp } from "@mui/icons-material";
+import { toast, Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +39,7 @@ const App: React.FC = () => {
         })
         .catch((error) => {
           if (error.response.status === 403) {
-            alert(
+            toast.error(
               "It seems that yours jwt token is expired...\nSign in again to use the app"
             );
 
@@ -58,6 +60,7 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContext.Provider value={{ user, setUser }}>
+        <Toaster position="top-center" />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
