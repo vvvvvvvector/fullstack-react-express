@@ -60,7 +60,6 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContext.Provider value={{ user, setUser }}>
-        <Toaster position="top-center" />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -69,6 +68,7 @@ const App: React.FC = () => {
         </Routes>
       </UserContext.Provider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <Toaster position="top-center" />
     </QueryClientProvider>
   );
 };

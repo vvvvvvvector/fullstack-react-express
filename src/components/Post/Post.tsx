@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 
-import axios from "axios";
-
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -13,6 +11,7 @@ import styles from "./Post.module.scss";
 
 import UserContext from "../../context/UserContext";
 import { toast } from "react-hot-toast";
+import { useFetchOnePost } from "../../hooks/useFetchOnePost";
 
 const Post: React.FC<PostType> = ({
   id,
@@ -25,17 +24,11 @@ const Post: React.FC<PostType> = ({
 }) => {
   const { user } = useContext(UserContext);
 
+  const { refetch } = useFetchOnePost(id);
+
   const handleOnPostClick = () => {
-    axios
-      .get(`http://localhost:4500/posts/${id}`)
-      .then(() => {
-        toast.success(`you have opened the post: ${id}`, {
-          position: "top-center",
-        });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    refetch();
+    toast.success(`You have fetched post:\n${id}`);
   };
 
   return (

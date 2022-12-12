@@ -10,11 +10,13 @@ import UserContext from "../../context/UserContext";
 import styles from "./Header.module.scss";
 
 import { scrollToTop } from "../../common/utils";
+import { toast } from "react-hot-toast";
 
 const Header: React.FC = () => {
   const { setUser } = useContext(UserContext);
 
   const handleSignOut = () => {
+    toast.success("Signed out successfully!");
     setUser(null);
     window.localStorage.removeItem("jwt-token");
     scrollToTop();
