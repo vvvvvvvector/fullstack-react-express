@@ -18,16 +18,15 @@ import UserContext from "../../context/UserContext";
 
 import styles from "./Home.module.scss";
 
-import { useQuery } from "react-query";
-import { fetchAllPosts } from "../../fetchers/posts";
+import { useFetchAllPosts } from "../../hooks/useFetchAllPosts";
 
 const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
+  const { isLoading, data } = useFetchAllPosts();
+
   const [isUserPosts, setIsUserPosts] = React.useState(false);
   const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);
-
-  const { isLoading, data } = useQuery(["posts"], fetchAllPosts);
 
   const renderPosts = () => {
     if (isUserPosts) {
