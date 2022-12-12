@@ -3,50 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { Formik, Form, useField, FieldAttributes } from "formik";
+import { Formik, Form } from "formik";
 
-import * as yup from "yup";
-
-import { TextField, Button, FormControlLabel, Checkbox } from "@mui/material";
+import MyTextField from "./MyTextField";
+import { Button, FormControlLabel, Checkbox } from "@mui/material";
 
 import UserContext from "../../context/UserContext";
 
+import validationSchema from "./validations";
+
 import styles from "./SignIn.module.scss";
-
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .required("Email is a required field!")
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "It isn't an email address!"),
-  password: yup
-    .string()
-    .required("You must have a password!")
-    .min(5, "Weak password!"),
-});
-
-type MyTextFieldType = { type: string; label: string } & FieldAttributes<{}>;
-
-const MyTextField: React.FC<MyTextFieldType> = ({ type, label, ...props }) => {
-  const [field, meta] = useField(props);
-
-  const errorText = meta.error && meta.touched ? meta.error : "";
-
-  // {...field} -> name, onChange, onBlur properites
-  return (
-    <TextField
-      sx={{
-        position: "relative",
-        width: "100%",
-        marginBottom: "20px",
-      }}
-      {...field}
-      type={type}
-      label={label}
-      helperText={errorText}
-      error={errorText !== ""}
-    />
-  );
-};
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
