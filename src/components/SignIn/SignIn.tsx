@@ -1,21 +1,22 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import axios from "axios";
+
+import { Button, FormControlLabel, Checkbox } from "@mui/material";
 
 import { Formik, Form } from "formik";
 
 import MyTextField from "./MyTextField";
-import { Button, FormControlLabel, Checkbox } from "@mui/material";
-
-import UserContext from "../../context/UserContext";
 
 import validationSchema from "./validations";
 
-import styles from "./SignIn.module.scss";
-import { toast } from "react-hot-toast";
+import UserContext from "../../context/UserContext";
 
-const SignIn: React.FC = () => {
+import styles from "./SignIn.module.scss";
+
+export const SignIn: React.FC = () => {
   const navigate = useNavigate();
 
   const { setUser } = useContext(UserContext);
@@ -80,13 +81,9 @@ const SignIn: React.FC = () => {
             >
               {isSubmitting ? "Loading..." : "Submit"}
             </Button>
-            {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-        <pre>{JSON.stringify(errors, null, 2)}</pre> */}
           </Form>
         )}
       </Formik>
     </div>
   );
 };
-
-export default SignIn;

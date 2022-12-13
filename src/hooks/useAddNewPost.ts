@@ -4,15 +4,13 @@ import { toast } from "react-hot-toast";
 
 import axios from "axios";
 
-const addNewPost = ({
-  title,
-  text,
-  tags,
-}: {
+type NewPost = {
   title: string;
   text: string;
   tags: string[];
-}) => {
+};
+
+const addNewPost = ({ title, text, tags }: NewPost) => {
   return axios.post(
     "http://localhost:4500/posts",
     {

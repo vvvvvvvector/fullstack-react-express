@@ -1,9 +1,9 @@
-export type UserType = {
+export type User = {
   _id: string;
   email: string;
 } | null;
 
-export type PostType = {
+export type AwesomePost = {
   id: string;
   userEmail: string;
   createdAt: string;
@@ -13,7 +13,12 @@ export type PostType = {
   views: number;
 };
 
-export type TagType = {
+export type Tag = {
   key: number;
   value: string;
+};
+
+export type CustomTextField = {
+  type: string;
+  label: string;
 };

@@ -17,7 +17,7 @@ export const useDeletePost = () => {
   return useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
-      toast.success("Post was successfully deleted!");
+      toast.success("Post was successfully deleted! ");
     },
   });
 };

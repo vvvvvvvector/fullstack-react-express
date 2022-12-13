@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { scrollToTop } from "../../common/utils";
-
 import {
   Button,
   CircularProgress,
@@ -12,15 +10,17 @@ import {
 import { Stack } from "@mui/system";
 import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
 
-import Post from "../Post/Post";
+import { scrollToTop } from "../../common/utils";
+
+import { Post } from "../";
+
+import { useAllPostsData } from "../../hooks/useAllPostsData";
 
 import UserContext from "../../context/UserContext";
 
 import styles from "./Home.module.scss";
 
-import { useAllPostsData } from "../../hooks/useAllPostsData";
-
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
   const { isLoading, data } = useAllPostsData();
@@ -89,5 +89,3 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
-export default Home;

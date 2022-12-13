@@ -5,14 +5,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import { formatDate } from "../../common/utils";
-import { PostType } from "../../common/types";
+
+import { AwesomePost } from "../../common/types";
+
+import { useDeletePost } from "../../hooks/useDeletePost";
+
+import UserContext from "../../context/UserContext";
 
 import styles from "./Post.module.scss";
 
-import UserContext from "../../context/UserContext";
-import { useDeletePost } from "../../hooks/useDeletePost";
-
-const Post: React.FC<PostType> = ({
+export const Post: React.FC<AwesomePost> = ({
   id,
   userEmail,
   createdAt,

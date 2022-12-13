@@ -1,25 +1,18 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { toast, Toaster } from "react-hot-toast";
 
 import axios from "axios";
 
-import Home from "./components/Home/Home";
-import Header from "./components/Header/Header";
-import SignIn from "./components/SignIn/SignIn";
-import { NewPost } from "./components/NewPost/NewPost";
+import { Home, Header, SignIn, NewPost } from "./components/";
 
-import { UserType } from "./common/types";
+import { User } from "./common/types";
 
 import UserContext from "./context/UserContext";
 
-import { ReactQueryDevtools } from "react-query/devtools";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { toast, Toaster } from "react-hot-toast";
-
-const queryClient = new QueryClient();
-
 const App: React.FC = () => {
-  const [user, setUser] = React.useState<UserType>(null);
+  const [user, setUser] = React.useState<User>(null);
 
   const navigate = useNavigate();
 
@@ -57,7 +50,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <UserContext.Provider value={{ user, setUser }}>
         <Header />
         <Routes>
@@ -68,7 +61,7 @@ const App: React.FC = () => {
       </UserContext.Provider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       <Toaster position="top-center" />
-    </QueryClientProvider>
+    </>
   );
 };
 

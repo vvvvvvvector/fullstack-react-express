@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import BiotechIcon from "@mui/icons-material/Biotech";
 
+import { scrollToTop } from "../../common/utils";
+
 import UserContext from "../../context/UserContext";
 
 import styles from "./Header.module.scss";
 
-import { scrollToTop } from "../../common/utils";
-import { toast } from "react-hot-toast";
-
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const { setUser } = useContext(UserContext);
 
   const handleSignOut = () => {
@@ -49,5 +49,3 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
-export default Header;

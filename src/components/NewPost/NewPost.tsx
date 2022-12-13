@@ -7,7 +7,7 @@ import { Formik, Form } from "formik";
 
 import { useAddNewPost } from "../../hooks/useAddNewPost";
 
-import { TagType } from "../../common/types";
+import { Tag } from "../../common/types";
 
 import styles from "./NewPost.module.scss";
 
@@ -15,9 +15,9 @@ export const NewPost: React.FC = () => {
   const { mutate } = useAddNewPost();
 
   const [tagsInput, setTagsInput] = React.useState("");
-  const [tags, setTags] = React.useState<TagType[]>([]);
+  const [tags, setTags] = React.useState<Tag[]>([]);
 
-  const handleDeleteTag = (tagToDelete: TagType) => () => {
+  const handleDeleteTag = (tagToDelete: Tag) => () => {
     setTags((tags) => tags.filter((tag) => tag.key !== tagToDelete.key));
   };
 
