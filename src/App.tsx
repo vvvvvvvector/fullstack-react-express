@@ -14,7 +14,6 @@ import UserContext from "./context/UserContext";
 
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { TonalitySharp } from "@mui/icons-material";
 import { toast, Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();

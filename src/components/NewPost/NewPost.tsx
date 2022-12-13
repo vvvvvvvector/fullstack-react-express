@@ -1,16 +1,15 @@
 import React from "react";
+import { toast } from "react-hot-toast";
 
 import { TextField, Button, Chip } from "@mui/material";
 
 import { Formik, Form } from "formik";
 
-import styles from "./NewPost.module.scss";
 import { useAddNewPost } from "../../hooks/useAddNewPost";
 
-interface TagType {
-  key: number;
-  value: string;
-}
+import { TagType } from "../../common/types";
+
+import styles from "./NewPost.module.scss";
 
 export const NewPost: React.FC = () => {
   const { mutate } = useAddNewPost();
@@ -38,6 +37,8 @@ export const NewPost: React.FC = () => {
               text: data.text,
               tags: _tags,
             });
+          } else {
+            toast.error("You must add title and text!");
           }
         }}
       >

@@ -12,3 +12,8 @@ export type PostType = {
   tags: string[];
   views: number;
 };
+
+export type TagType = {
+  key: number;
+  value: string;
+};

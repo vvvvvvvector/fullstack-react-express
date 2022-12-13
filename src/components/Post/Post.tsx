@@ -10,8 +10,7 @@ import { PostType } from "../../common/types";
 import styles from "./Post.module.scss";
 
 import UserContext from "../../context/UserContext";
-import { toast } from "react-hot-toast";
-import { useOnePostData } from "../../hooks/useOnePostData";
+import { useDeletePost } from "../../hooks/useDeletePost";
 
 const Post: React.FC<PostType> = ({
   id,
@@ -24,15 +23,10 @@ const Post: React.FC<PostType> = ({
 }) => {
   const { user } = useContext(UserContext);
 
-  const { refetch } = useOnePostData(id);
-
-  const handleOnPostClick = () => {
-    refetch();
-    toast.success(`You have fetched post:\n${id}`);
-  };
+  const { mutate } = useDeletePost();
 
   return (
-    <div onClick={handleOnPostClick} className={styles["post-wrapper"]}>
+    <div className={styles["post-wrapper"]}>
       <b>{userEmail}</b>
       <p className={styles["created-at"]}>{`Created: ${formatDate(
         createdAt
@@ -55,6 +49,7 @@ const Post: React.FC<PostType> = ({
             top: "30px",
             right: "30px",
           }}
+          onClick={() => mutate({ id })}
           endIcon={<DeleteIcon color="error" />}
           color="error"
           variant="outlined"
