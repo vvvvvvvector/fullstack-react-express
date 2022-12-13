@@ -10,7 +10,7 @@ import {
 import { Stack } from "@mui/system";
 import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
 
-import { scrollToTop } from "../../common/utils";
+import { getUserToken, scrollToTop } from "../../common/utils";
 
 import { Post } from "../";
 
@@ -26,38 +26,32 @@ export const Home: React.FC = () => {
   const { isLoading, data } = useAllPostsData();
 
   const [isUserPosts, setIsUserPosts] = React.useState(false);
-  const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);
-
-  const renderPosts = () => {
-    if (isUserPosts) {
-      return data?.map((item: any, index: number) => {
-        if (item.userEmail === user?.email) {
-          return <Post key={index} {...item} />;
-        }
-      });
-    }
-
-    return data?.map((item: any, index: number) => (
-      <Post key={index} {...item} />
-    ));
-  };
+  const [isVisible, setIsVisible] = React.useState(false);
 
   window.addEventListener("scroll", () => {
     const scrolled = document.documentElement.scrollTop;
 
     const max = 200;
 
-    if (scrolled > max) {
-      setScrollToTopVisible(true);
-    } else if (scrolled <= max) {
-      setScrollToTopVisible(false);
-    }
+    if (scrolled > max) setIsVisible(true);
+    else if (scrolled <= max) setIsVisible(false);
   });
+
+  const renderPosts = () => {
+    if (isUserPosts) {
+      return data?.map((item, index) => {
+        if (item.userEmail === user?.email)
+          return <Post key={index} {...item} />;
+      });
+    }
+
+    return data?.map((item, index) => <Post key={index} {...item} />);
+  };
 
   return (
     <div className={styles.home}>
       <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
-      {window.localStorage.getItem("jwt-token") ? (
+      {getUserToken() ? (
         <div className={styles["after-header"]}>
           <span>You are welcome!</span>
           <Stack direction={"row"} gap={2}>
@@ -80,7 +74,7 @@ export const Home: React.FC = () => {
       ) : (
         renderPosts()
       )}
-      {scrollToTopVisible && (
+      {isVisible && (
         <div onClick={scrollToTop} className={styles.scroll}>
           <span>scroll to top</span>
           <NorthOutlinedIcon className={styles.arrow} fontSize="small" />

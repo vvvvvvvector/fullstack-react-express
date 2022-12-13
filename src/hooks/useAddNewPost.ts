@@ -4,11 +4,9 @@ import { toast } from "react-hot-toast";
 
 import axios from "axios";
 
-type NewPost = {
-  title: string;
-  text: string;
-  tags: string[];
-};
+import { NewPost } from "../common/types";
+
+import { getUserToken } from "../common/utils";
 
 const addNewPost = ({ title, text, tags }: NewPost) => {
   return axios.post(
@@ -20,7 +18,7 @@ const addNewPost = ({ title, text, tags }: NewPost) => {
     },
     {
       headers: {
-        Authorization: "Bearer " + window.localStorage.getItem("jwt-token"),
+        Authorization: "Bearer " + getUserToken(),
       },
     }
   );
@@ -33,6 +31,9 @@ export const useAddNewPost = () => {
     onSuccess: () => {
       toast.success("Post was successfully added!");
       navigate("/");
+    },
+    onError: () => {
+      toast.error("Error while creating post!");
     },
   });
 };

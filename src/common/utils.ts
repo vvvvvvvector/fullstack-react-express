@@ -21,3 +21,15 @@ export const scrollToTop = () => {
     behavior: "smooth",
   });
 };
+
+export const setUserToken = (token: string) => {
+  window.localStorage.setItem("jwt-token", token);
+};
+
+export const getUserToken = () => {
+  return window.localStorage.getItem("jwt-token");
+};
+
+export const clearUserToken = () => {
+  window.localStorage.removeItem("jwt-token");
+};

@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import BiotechIcon from "@mui/icons-material/Biotech";
 
-import { scrollToTop } from "../../common/utils";
+import { clearUserToken, getUserToken, scrollToTop } from "../../common/utils";
 
 import UserContext from "../../context/UserContext";
 
@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
   const handleSignOut = () => {
     toast.success("Signed out successfully!");
     setUser(null);
-    window.localStorage.removeItem("jwt-token");
+    clearUserToken();
     scrollToTop();
   };
 
@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
           </h3>
         </div>
       </Link>
-      {window.localStorage.getItem("jwt-token") ? (
+      {getUserToken() ? (
         <Link to="/">
           <Button onClick={handleSignOut} variant="outlined" color="error">
             Sign out

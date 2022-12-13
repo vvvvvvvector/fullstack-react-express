@@ -10,6 +10,7 @@ import { Home, Header, SignIn, NewPost } from "./components/";
 import { User } from "./common/types";
 
 import UserContext from "./context/UserContext";
+import { clearUserToken, getUserToken } from "./common/utils";
 
 const App: React.FC = () => {
   const [user, setUser] = React.useState<User>(null);
@@ -17,7 +18,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const token = window.localStorage.getItem("jwt-token");
+    const token = getUserToken();
 
     const fetchAuthMe = () => {
       axios
@@ -36,7 +37,7 @@ const App: React.FC = () => {
             );
 
             setUser(null);
-            window.localStorage.removeItem("jwt-token");
+            clearUserToken();
             navigate("/");
           } else {
             console.log(error.message);

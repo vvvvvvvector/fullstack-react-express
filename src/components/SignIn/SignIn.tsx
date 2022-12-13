@@ -15,6 +15,7 @@ import validationSchema from "./validations";
 import UserContext from "../../context/UserContext";
 
 import styles from "./SignIn.module.scss";
+import { setUserToken } from "../../common/utils";
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export const SignIn: React.FC = () => {
               const { user, token } = res.data;
 
               setUser(user);
-              window.localStorage.setItem("jwt-token", token);
+              setUserToken(token);
 
               toast.success("Signed in successfully!");
 

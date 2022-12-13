@@ -1,16 +1,17 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { AwesomePost } from "../common/types";
 
 const fetch = async () => {
-  const response = await axios.get("http://localhost:4500/posts");
+  const { data } = await axios.get("http://localhost:4500/posts");
 
-  return response.data.posts;
+  return data.posts;
 };
 
 export const useAllPostsData = () => {
   return useQuery("posts", fetch, {
     cacheTime: 20000,
-    select: (data) => {
+    select: (data): AwesomePost[] => {
       return data.map((i: any) => {
         return {
           id: i._id,
