@@ -14,7 +14,7 @@ import { getUserToken, scrollToTop } from "../../common/utils";
 
 import { Post } from "../";
 
-import { useAllPostsData } from "../../hooks/useAllPostsData";
+import { useAllPostsData } from "../../reactQueryHooks/useAllPostsData";
 
 import UserContext from "../../context/UserContext";
 
