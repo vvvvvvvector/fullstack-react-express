@@ -11,7 +11,7 @@ import styles from "./Post.module.scss";
 
 import UserContext from "../../context/UserContext";
 import { toast } from "react-hot-toast";
-import { useFetchOnePost } from "../../hooks/useFetchOnePost";
+import { useOnePostData } from "../../hooks/useOnePostData";
 
 const Post: React.FC<PostType> = ({
   id,
@@ -24,7 +24,7 @@ const Post: React.FC<PostType> = ({
 }) => {
   const { user } = useContext(UserContext);
 
-  const { refetch } = useFetchOnePost(id);
+  const { refetch } = useOnePostData(id);
 
   const handleOnPostClick = () => {
     refetch();

@@ -1,13 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
 
 import { TextField, Button, Chip } from "@mui/material";
 
 import { Formik, Form } from "formik";
 
 import styles from "./NewPost.module.scss";
+import { useAddNewPost } from "../../hooks/useAddNewPost";
 
 interface TagType {
   key: number;
@@ -15,7 +13,7 @@ interface TagType {
 }
 
 export const NewPost: React.FC = () => {
-  const navigate = useNavigate();
+  const { mutate } = useAddNewPost();
 
   const [tagsInput, setTagsInput] = React.useState("");
   const [tags, setTags] = React.useState<TagType[]>([]);
@@ -32,31 +30,14 @@ export const NewPost: React.FC = () => {
           text: "",
         }}
         onSubmit={(data) => {
-          const resTags = [];
-
-          for (let i = 0; i < tags.length; i++) {
-            resTags.push(tags[i].value);
-          }
+          const _tags = tags.map((i) => i.value);
 
           if (data.text !== "" && data.title !== "") {
-            axios
-              .post(
-                "http://localhost:4500/posts",
-                {
-                  title: data.title,
-                  text: data.text,
-                  tags: resTags,
-                },
-                {
-                  headers: {
-                    Authorization:
-                      "Bearer " + window.localStorage.getItem("jwt-token"),
-                  },
-                }
-              )
-              .then(() => {
-                navigate("/");
-              });
+            mutate({
+              title: data.title,
+              text: data.text,
+              tags: _tags,
+            });
           }
         }}
       >

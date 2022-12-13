@@ -18,12 +18,12 @@ import UserContext from "../../context/UserContext";
 
 import styles from "./Home.module.scss";
 
-import { useFetchAllPosts } from "../../hooks/useFetchAllPosts";
+import { useAllPostsData } from "../../hooks/useAllPostsData";
 
 const Home: React.FC = () => {
   const { user } = useContext(UserContext);
 
-  const { isLoading, data } = useFetchAllPosts();
+  const { isLoading, data } = useAllPostsData();
 
   const [isUserPosts, setIsUserPosts] = React.useState(false);
   const [scrollToTopVisible, setScrollToTopVisible] = React.useState(false);

@@ -7,9 +7,8 @@ const fetch = async () => {
   return response.data.posts;
 };
 
-export const useFetchAllPosts = () => {
+export const useAllPostsData = () => {
   return useQuery("posts", fetch, {
-    staleTime: 30000,
     cacheTime: 20000,
     select: (data) => {
       return data.map((i: any) => {
