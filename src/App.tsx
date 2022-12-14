@@ -5,7 +5,7 @@ import { toast, Toaster } from "react-hot-toast";
 
 import axios from "axios";
 
-import { Home, Header, SignIn, NewPost } from "./components/";
+import { Home, Header, SignIn, NewPost, WholePost } from "./components/";
 
 import { User } from "./common/types";
 
@@ -58,10 +58,19 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/newpost" element={<NewPost />} />
+          <Route path="/post/:id" element={<WholePost />} />
         </Routes>
       </UserContext.Provider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            borderRadius: "20px",
+            color: "#28282B",
+          },
+        }}
+      />
     </>
   );
 };

@@ -10,13 +10,13 @@ export type NewPost = {
 };
 
 export type AwesomePost = {
-  id: string;
-  userEmail: string;
-  createdAt: string;
-  title: string;
-  text: string;
-  tags: string[];
-  views: number;
+  id?: string;
+  userEmail?: string;
+  createdAt?: string;
+  title?: string;
+  text?: string;
+  tags?: string[];
+  views?: number;
 };
 
 export type Tag = {
