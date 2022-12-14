@@ -149,8 +149,10 @@ export const getOne = async (req, res) => {
       },
       {
         returnDocument: "after",
-      },
-      (err, doc) => {
+      }
+    )
+      .populate("user", "_id email")
+      .exec((err, doc) => {
         if (err) {
           return res.status(500).json({
             success: false,
@@ -169,8 +171,7 @@ export const getOne = async (req, res) => {
           success: true,
           doc,
         });
-      }
-    );
+      });
   } catch (error) {
     console.log(error);
 
@@ -183,9 +184,7 @@ export const getOne = async (req, res) => {
 
 export const getAll = async (_, res) => {
   try {
-    const posts = await PostModel.find()
-      .populate("user", "_id email")
-      .exec();
+    const posts = await PostModel.find().populate("user", "_id email").exec();
 
     res.json({
       success: true,
