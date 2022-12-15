@@ -1,22 +1,24 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import BiotechIcon from "@mui/icons-material/Biotech";
 
+import { clearUserToken, getUserToken, scrollToTop } from "../../common/utils";
+
 import UserContext from "../../context/UserContext";
 
 import styles from "./Header.module.scss";
 
-import { scrollToTop } from "../../common/utils";
-
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const { setUser } = useContext(UserContext);
 
   const handleSignOut = () => {
+    toast.success("Signed out successfully!");
     setUser(null);
-    window.localStorage.removeItem("jwt-token");
+    clearUserToken();
     scrollToTop();
   };
 
@@ -30,7 +32,7 @@ const Header: React.FC = () => {
           </h3>
         </div>
       </Link>
-      {window.localStorage.getItem("jwt-token") ? (
+      {getUserToken() ? (
         <Link to="/">
           <Button onClick={handleSignOut} variant="outlined" color="error">
             Sign out
@@ -47,5 +49,3 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
-export default Header;

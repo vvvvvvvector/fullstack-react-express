@@ -1,10 +1,10 @@
 import { createContext } from "react";
 
-import { UserType } from "../common/types";
+import { User } from "../common/types";
 
 const UserContext = createContext<{
-  user: UserType;
-  setUser: (value: UserType) => void;
+  user: User;
+  setUser: (value: User) => void;
 }>({
   user: null,
   setUser: () => undefined,

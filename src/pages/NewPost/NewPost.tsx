@@ -1,27 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import { TextField, Button, Chip } from "@mui/material";
 
 import { Formik, Form } from "formik";
 
+import { useAddNewPost } from "../../reactQueryHooks/useAddNewPost";
+
 import styles from "./NewPost.module.scss";
 
-interface TagType {
-  key: number;
-  value: string;
-}
-
 export const NewPost: React.FC = () => {
-  const navigate = useNavigate();
+  const { mutate } = useAddNewPost();
 
   const [tagsInput, setTagsInput] = React.useState("");
-  const [tags, setTags] = React.useState<TagType[]>([]);
+  const [tags, setTags] = React.useState<string[]>([]);
 
-  const handleDeleteTag = (tagToDelete: TagType) => () => {
-    setTags((tags) => tags.filter((tag) => tag.key !== tagToDelete.key));
+  const handleDeleteTag = (tagIndex: number) => () => {
+    setTags((prev) => prev.filter((_, index) => index !== tagIndex));
   };
 
   return (
@@ -32,31 +27,14 @@ export const NewPost: React.FC = () => {
           text: "",
         }}
         onSubmit={(data) => {
-          const resTags = [];
-
-          for (let i = 0; i < tags.length; i++) {
-            resTags.push(tags[i].value);
-          }
-
           if (data.text !== "" && data.title !== "") {
-            axios
-              .post(
-                "http://localhost:4500/posts",
-                {
-                  title: data.title,
-                  text: data.text,
-                  tags: resTags,
-                },
-                {
-                  headers: {
-                    Authorization:
-                      "Bearer " + window.localStorage.getItem("jwt-token"),
-                  },
-                }
-              )
-              .then(() => {
-                navigate("/");
-              });
+            mutate({
+              title: data.title,
+              text: data.text,
+              tags,
+            });
+          } else {
+            toast.error("You must add title and text!");
           }
         }}
       >
@@ -65,7 +43,11 @@ export const NewPost: React.FC = () => {
             <h2 className={styles.header}>New post</h2>
             <TextField
               name="title"
-              sx={{ position: "relative", width: "100%", marginBottom: "20px" }}
+              sx={{
+                position: "relative",
+                width: "100%",
+                marginBottom: "20px",
+              }}
               label="Title"
               type="text"
               onChange={handleChange}
@@ -89,8 +71,8 @@ export const NewPost: React.FC = () => {
                   <Chip
                     key={index}
                     size="small"
-                    label={tag.value}
-                    onDelete={handleDeleteTag(tag)}
+                    label={tag}
+                    onDelete={handleDeleteTag(index)}
                   />
                 ))}
               </div>
@@ -105,16 +87,15 @@ export const NewPost: React.FC = () => {
                 }}
                 value={tagsInput}
                 label="Tag"
-                variant="filled"
+                variant="outlined"
               />
               <Button
                 onClick={() => {
                   if (tagsInput !== "") {
-                    setTags((prev) => [
-                      ...prev,
-                      { key: tags.length, value: tagsInput },
-                    ]);
+                    setTags((prev) => [...prev, tagsInput]);
                     setTagsInput("");
+                  } else {
+                    toast.error("You must specify tag value!");
                   }
                 }}
                 variant="outlined"

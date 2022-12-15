@@ -1,24 +1,25 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { toast, Toaster } from "react-hot-toast";
 
 import axios from "axios";
 
-import Home from "./components/Home/Home";
-import Header from "./components/Header/Header";
-import SignIn from "./components/SignIn/SignIn";
+import { Header } from "./components";
+import { Home, SignIn, NewPost, WholePost } from "./pages";
 
-import { UserType } from "./common/types";
+import { User } from "./common/types";
 
 import UserContext from "./context/UserContext";
-import { NewPost } from "./components/NewPost/NewPost";
+import { clearUserToken, getUserToken } from "./common/utils";
 
 const App: React.FC = () => {
-  const [user, setUser] = React.useState<UserType>(null);
+  const [user, setUser] = React.useState<User>(null);
 
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const token = window.localStorage.getItem("jwt-token");
+    const token = getUserToken();
 
     const fetchAuthMe = () => {
       axios
@@ -32,12 +33,12 @@ const App: React.FC = () => {
         })
         .catch((error) => {
           if (error.response.status === 403) {
-            alert(
+            toast.error(
               "It seems that yours jwt token is expired...\nSign in again to use the app"
             );
 
             setUser(null);
-            window.localStorage.removeItem("jwt-token");
+            clearUserToken();
             navigate("/");
           } else {
             console.log(error.message);
@@ -58,8 +59,19 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/newpost" element={<NewPost />} />
+          <Route path="/post/:id" element={<WholePost />} />
         </Routes>
       </UserContext.Provider>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            borderRadius: "20px",
+            color: "#28282B",
+          },
+        }}
+      />
     </>
   );
 };
