@@ -43,7 +43,11 @@ export const NewPost: React.FC = () => {
             <h2 className={styles.header}>New post</h2>
             <TextField
               name="title"
-              sx={{ position: "relative", width: "100%", marginBottom: "20px" }}
+              sx={{
+                position: "relative",
+                width: "100%",
+                marginBottom: "20px",
+              }}
               label="Title"
               type="text"
               onChange={handleChange}
@@ -90,6 +94,8 @@ export const NewPost: React.FC = () => {
                   if (tagsInput !== "") {
                     setTags((prev) => [...prev, tagsInput]);
                     setTagsInput("");
+                  } else {
+                    toast.error("You must specify tag value!");
                   }
                 }}
                 variant="outlined"

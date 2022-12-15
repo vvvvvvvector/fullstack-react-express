@@ -13,7 +13,7 @@ import Pagination from "@mui/material/Pagination";
 
 import { getUserToken, scrollToTop } from "../../common/utils";
 
-import { Post } from "../";
+import { Post } from "../../components";
 
 import { useAllPostsData } from "../../reactQueryHooks/useAllPostsData";
 

@@ -4,7 +4,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { Button } from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 
-import { Post } from "../Post/Post";
+import { Post } from "../../components/Post/Post";
 
 import { useWholePostData } from "../../reactQueryHooks/useWholePostData";
 

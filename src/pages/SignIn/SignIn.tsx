@@ -4,19 +4,19 @@ import { toast } from "react-hot-toast";
 
 import axios from "axios";
 
+import { setUserToken } from "../../common/utils";
+
 import { Button, FormControlLabel, Checkbox } from "@mui/material";
-
-import { Formik, Form } from "formik";
-
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
+
+import { Formik, Form } from "formik";
 
 import validationSchema from "./validations";
 
 import UserContext from "../../context/UserContext";
 
 import styles from "./SignIn.module.scss";
-import { setUserToken } from "../../common/utils";
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -45,7 +45,6 @@ export const SignIn: React.FC = () => {
               navigate("/");
 
               toast.success("Signed in successfully:>");
-
               console.log(JSON.stringify(res.data, null, 2));
             })
             .catch((err) => {

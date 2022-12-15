@@ -5,7 +5,8 @@ import { toast, Toaster } from "react-hot-toast";
 
 import axios from "axios";
 
-import { Home, Header, SignIn, NewPost, WholePost } from "./components/";
+import { Header } from "./components";
+import { Home, SignIn, NewPost, WholePost } from "./pages";
 
 import { User } from "./common/types";
 
