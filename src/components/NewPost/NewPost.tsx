@@ -83,7 +83,7 @@ export const NewPost: React.FC = () => {
                 }}
                 value={tagsInput}
                 label="Tag"
-                variant="filled"
+                variant="outlined"
               />
               <Button
                 onClick={() => {
