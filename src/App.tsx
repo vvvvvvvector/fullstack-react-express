@@ -6,7 +6,7 @@ import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 
 import { Header } from "./components";
-import { Home, SignIn, NewPost, WholePost } from "./pages";
+import { Home, SignIn, NewPost, WholePost, SignUp } from "./pages";
 
 import { User } from "./common/types";
 
@@ -58,6 +58,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/newpost" element={<NewPost />} />
           <Route path="/post/:id" element={<WholePost />} />
         </Routes>
