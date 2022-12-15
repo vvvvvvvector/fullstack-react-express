@@ -41,13 +41,14 @@ export const SignIn: React.FC = () => {
               setUser(user);
               setUserToken(token);
 
-              toast.success("Signed in successfully!");
-
               navigate("/");
+
+              toast.success("Signed in successfully:>");
 
               console.log(JSON.stringify(res.data, null, 2));
             })
             .catch((err) => {
+              toast.error("Incorrect username or password.");
               console.log(JSON.stringify(err.response.data, null, 2));
             });
 

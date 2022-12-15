@@ -1,6 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
-import { CircularProgress } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
+import { Button } from "@mui/material";
+import WestIcon from "@mui/icons-material/West";
 
 import { Post } from "../Post/Post";
 
@@ -16,11 +18,23 @@ export const WholePost = () => {
   return (
     <div className={styles.wrapper}>
       {isLoading ? (
-        <div className={styles.loading}>
-          <CircularProgress size="5rem" />
-        </div>
+        <Skeleton
+          sx={{
+            bgcolor: "#fafaf9",
+          }}
+          animation="wave"
+          variant="rounded"
+          height={256}
+        />
       ) : (
-        <Post {...data} />
+        <>
+          <Link to="/">
+            <Button variant="contained" startIcon={<WestIcon />}>
+              go back
+            </Button>
+          </Link>
+          <Post {...data} />
+        </>
       )}
     </div>
   );

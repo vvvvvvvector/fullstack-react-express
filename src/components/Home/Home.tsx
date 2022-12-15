@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
+import Pagination from "@mui/material/Pagination";
 
 import { getUserToken, scrollToTop } from "../../common/utils";
 
@@ -73,6 +74,14 @@ export const Home: React.FC = () => {
         </div>
       ) : (
         renderPosts()
+      )}
+      {!isLoading && (
+        <Pagination
+          count={10}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+        />
       )}
       {isVisible && (
         <div onClick={scrollToTop} className={styles.scroll}>
