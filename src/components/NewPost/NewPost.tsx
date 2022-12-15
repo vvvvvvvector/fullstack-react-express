@@ -7,18 +7,16 @@ import { Formik, Form } from "formik";
 
 import { useAddNewPost } from "../../reactQueryHooks/useAddNewPost";
 
-import { Tag } from "../../common/types";
-
 import styles from "./NewPost.module.scss";
 
 export const NewPost: React.FC = () => {
   const { mutate } = useAddNewPost();
 
   const [tagsInput, setTagsInput] = React.useState("");
-  const [tags, setTags] = React.useState<Tag[]>([]);
+  const [tags, setTags] = React.useState<string[]>([]);
 
-  const handleDeleteTag = (tagToDelete: Tag) => () => {
-    setTags((tags) => tags.filter((tag) => tag.key !== tagToDelete.key));
+  const handleDeleteTag = (tagIndex: number) => () => {
+    setTags((prev) => prev.filter((_, index) => index !== tagIndex));
   };
 
   return (
@@ -29,13 +27,11 @@ export const NewPost: React.FC = () => {
           text: "",
         }}
         onSubmit={(data) => {
-          const _tags = tags.map((i) => i.value);
-
           if (data.text !== "" && data.title !== "") {
             mutate({
               title: data.title,
               text: data.text,
-              tags: _tags,
+              tags,
             });
           } else {
             toast.error("You must add title and text!");
@@ -71,8 +67,8 @@ export const NewPost: React.FC = () => {
                   <Chip
                     key={index}
                     size="small"
-                    label={tag.value}
-                    onDelete={handleDeleteTag(tag)}
+                    label={tag}
+                    onDelete={handleDeleteTag(index)}
                   />
                 ))}
               </div>
@@ -92,10 +88,7 @@ export const NewPost: React.FC = () => {
               <Button
                 onClick={() => {
                   if (tagsInput !== "") {
-                    setTags((prev) => [
-                      ...prev,
-                      { key: tags.length, value: tagsInput },
-                    ]);
+                    setTags((prev) => [...prev, tagsInput]);
                     setTagsInput("");
                   }
                 }}

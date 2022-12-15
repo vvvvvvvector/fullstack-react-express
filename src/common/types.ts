@@ -18,8 +18,3 @@ export type AwesomePost = {
   tags?: string[];
   views?: number;
 };
-
-export type Tag = {
-  key: number;
-  value: string;
-};

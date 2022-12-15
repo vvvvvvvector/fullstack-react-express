@@ -29,7 +29,10 @@ const PasswordField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton onClick={() => setPasswordVisible(!passwordVisible)}>
+            <IconButton
+              sx={{ color: "#28282b" }}
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
               {passwordVisible ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
