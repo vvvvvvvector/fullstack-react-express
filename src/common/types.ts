@@ -23,8 +23,3 @@ export type Tag = {
   key: number;
   value: string;
 };
-
-export type CustomTextField = {
-  type: string;
-  label: string;
-};

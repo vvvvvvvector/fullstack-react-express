@@ -2,13 +2,7 @@ import { TextField } from "@mui/material";
 
 import { useField, FieldAttributes } from "formik";
 
-import { CustomTextField } from "../../common/types";
-
-const MyTextField: React.FC<CustomTextField & FieldAttributes<{}>> = ({
-  type,
-  label,
-  ...props
-}) => {
+const EmailField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
   const [field, meta] = useField(props);
 
   const errorText = meta.error && meta.touched ? meta.error : "";
@@ -22,12 +16,12 @@ const MyTextField: React.FC<CustomTextField & FieldAttributes<{}>> = ({
         marginBottom: "20px",
       }}
       {...field}
-      type={type}
-      label={label}
+      type="text"
+      label="Your email"
       helperText={errorText}
       error={errorText !== ""}
     />
   );
 };
 
-export default MyTextField;
+export default EmailField;

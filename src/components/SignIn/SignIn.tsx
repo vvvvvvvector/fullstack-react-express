@@ -8,7 +8,8 @@ import { Button, FormControlLabel, Checkbox } from "@mui/material";
 
 import { Formik, Form } from "formik";
 
-import MyTextField from "./MyTextField";
+import EmailField from "./EmailField";
+import PasswordField from "./PasswordField";
 
 import validationSchema from "./validations";
 
@@ -58,12 +59,8 @@ export const SignIn: React.FC = () => {
         {({ values, isSubmitting, handleChange }) => (
           <Form>
             <h2 className={styles.header}>Sign in</h2>
-            <MyTextField name="email" type="text" label="Your email" />
-            <MyTextField
-              name="password"
-              type="password"
-              label="Your password"
-            />
+            <EmailField name="email" />
+            <PasswordField name="password" />
             <FormControlLabel
               name="isCool"
               control={<Checkbox checked={values.isCool} />}
