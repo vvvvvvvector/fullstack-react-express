@@ -9,9 +9,13 @@ import { Formik, Form } from "formik";
 
 import { SignUpValidation } from "../Common/validations";
 
+import { useCreateUser } from "../../../reactQueryHooks/useCreateUser";
+
 import styles from "./SignUp.module.scss";
 
 export const SignUp = () => {
+  const { mutate } = useCreateUser();
+
   return (
     <div className={styles["form-wrapper"]}>
       <Formik
@@ -21,12 +25,9 @@ export const SignUp = () => {
           if (data.password === data.confirmPassword) {
             setSubmitting(true);
 
-            setTimeout(() => {
-              console.log(data);
-              setSubmitting(false);
-            }, 3000);
+            mutate({ email: data.email, password: data.password });
 
-            toast.success("Submitted successfully!");
+            setSubmitting(false);
           } else {
             setSubmitting(false);
 
