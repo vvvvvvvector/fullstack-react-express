@@ -4,17 +4,17 @@ import { toast } from "react-hot-toast";
 
 import axios from "axios";
 
-import { setUserToken } from "../../common/utils";
+import { setUserToken } from "../../../common/utils";
 
 import { Button, FormControlLabel, Checkbox } from "@mui/material";
-import { Email } from "./Email";
+import { Email } from "../Common/Email";
 import { Password } from "./Password";
 
 import { Formik, Form } from "formik";
 
-import validationSchema from "./validations";
+import { SignInValidation } from "../Common/validations";
 
-import UserContext from "../../context/UserContext";
+import UserContext from "../../../context/UserContext";
 
 import styles from "./SignIn.module.scss";
 
@@ -27,7 +27,7 @@ export const SignIn: React.FC = () => {
     <div className={styles["form-wrapper"]}>
       <Formik
         initialValues={{ email: "", password: "", isCool: false }}
-        validationSchema={validationSchema}
+        validationSchema={SignInValidation}
         onSubmit={async (data, { setSubmitting }) => {
           setSubmitting(true);
 
@@ -70,6 +70,7 @@ export const SignIn: React.FC = () => {
               sx={{
                 position: "relative",
                 width: "100%",
+                height: "42px",
                 marginTop: "20px",
               }}
               type="submit"
