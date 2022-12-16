@@ -1,13 +1,17 @@
+import { useState } from "react";
+
 import { TextField } from "@mui/material";
 
 import { useField, FieldAttributes } from "formik";
 
-const EmailField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
+export const Password: React.FC<{ label: string } & FieldAttributes<{}>> = ({
+  label,
+  ...props
+}) => {
   const [field, meta] = useField(props);
 
   const errorText = meta.error && meta.touched ? meta.error : "";
 
-  // {...field} -> name, onChange, onBlur properites
   return (
     <TextField
       sx={{
@@ -16,12 +20,10 @@ const EmailField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
         marginBottom: "20px",
       }}
       {...field}
-      type="text"
-      label="Your email"
+      type={"password"}
+      label={label}
       helperText={errorText}
       error={errorText !== ""}
     />
   );
 };
-
-export default EmailField;
