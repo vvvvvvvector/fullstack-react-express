@@ -2,12 +2,11 @@ import { TextField } from "@mui/material";
 
 import { useField, FieldAttributes } from "formik";
 
-const EmailField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
+export const Email: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
   const [field, meta] = useField(props);
 
   const errorText = meta.error && meta.touched ? meta.error : "";
 
-  // {...field} -> name, onChange, onBlur properites
   return (
     <TextField
       sx={{
@@ -23,5 +22,3 @@ const EmailField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
     />
   );
 };
-
-export default EmailField;

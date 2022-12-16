@@ -6,14 +6,13 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { useField, FieldAttributes } from "formik";
 
-const PasswordField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
+export const Password: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
   const [field, meta] = useField(props);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const errorText = meta.error && meta.touched ? meta.error : "";
 
-  // {...field} -> name, onChange, onBlur properites
   return (
     <TextField
       sx={{
@@ -41,5 +40,3 @@ const PasswordField: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
     />
   );
 };
-
-export default PasswordField;

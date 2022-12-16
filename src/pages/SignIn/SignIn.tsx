@@ -7,8 +7,8 @@ import axios from "axios";
 import { setUserToken } from "../../common/utils";
 
 import { Button, FormControlLabel, Checkbox } from "@mui/material";
-import EmailField from "./EmailField";
-import PasswordField from "./PasswordField";
+import { Email } from "./Email";
+import { Password } from "./Password";
 
 import { Formik, Form } from "formik";
 
@@ -58,8 +58,8 @@ export const SignIn: React.FC = () => {
         {({ values, isSubmitting, handleChange }) => (
           <Form>
             <h2 className={styles.header}>Sign in</h2>
-            <EmailField name="email" />
-            <PasswordField name="password" />
+            <Email name="email" />
+            <Password name="password" />
             <FormControlLabel
               name="isCool"
               control={<Checkbox checked={values.isCool} />}
