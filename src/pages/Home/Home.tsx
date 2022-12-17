@@ -51,7 +51,7 @@ export const Home: React.FC = () => {
 
   return (
     <div className={styles.home}>
-      <h1>{user ? `Hello ${user.email}!` : "Home page"}</h1>
+      <h1>{user ? `Signed in as ${user.email}!` : "Home page"}</h1>
       {getUserToken() ? (
         <div className={styles["after-header"]}>
           <span>You are welcome!</span>
