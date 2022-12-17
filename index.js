@@ -7,6 +7,8 @@ import { signUpValidation, postCreateValidation } from "./validations.js";
 
 import { UserController, PostController } from "./controllers/index.js";
 
+// autodeploy?
+
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
