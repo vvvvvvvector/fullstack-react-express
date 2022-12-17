@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -8,12 +8,12 @@ import BiotechIcon from "@mui/icons-material/Biotech";
 
 import { clearUserToken, getUserToken, scrollToTop } from "../../common/utils";
 
-import UserContext from "../../context/UserContext";
+import useUserContext from "../../context/hooks/useUserContext";
 
 import styles from "./Header.module.scss";
 
 export const Header: React.FC = () => {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
 
   const handleSignOut = () => {
     toast.success("Signed out successfully!");
