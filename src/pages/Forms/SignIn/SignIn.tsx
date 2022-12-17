@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -14,14 +14,14 @@ import { Formik, Form } from "formik";
 
 import { SignInValidation } from "../Common/validations";
 
-import UserContext from "../../../context/UserContext";
+import useUserContext from "../../../context/hooks/useUserContext";
 
 import styles from "./SignIn.module.scss";
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
 
   return (
     <div className={styles["form-wrapper"]}>

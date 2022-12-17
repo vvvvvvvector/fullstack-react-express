@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "@mui/material";
@@ -11,7 +11,7 @@ import { AwesomePost } from "../../common/types";
 
 import { useDeletePost } from "../../reactQueryHooks/useDeletePost";
 
-import UserContext from "../../context/UserContext";
+import useUserContext from "../../context/hooks/useUserContext";
 
 import styles from "./Post.module.scss";
 
@@ -24,7 +24,7 @@ export const Post: React.FC<AwesomePost> = ({
   tags,
   views,
 }) => {
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   const { mutate } = useDeletePost();
 

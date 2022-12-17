@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { toast } from "react-hot-toast";
@@ -7,19 +6,16 @@ import axios from "axios";
 
 import { setUserToken } from "../common/utils";
 
-import UserContext from "../context/UserContext";
+import useUserContext from "../context/hooks/useUserContext";
 
-const create = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  const { data } = await axios.post("https://backend-iuo3.onrender.com/auth/signup", {
-    email,
-    password,
-  });
+const create = async (creditionals: { email: string; password: string }) => {
+  const { data } = await axios.post(
+    "https://backend-iuo3.onrender.com/auth/signup",
+    {
+      email: creditionals.email,
+      password: creditionals.password,
+    }
+  );
 
   return data;
 };
@@ -27,7 +23,7 @@ const create = async ({
 export const useCreateUser = () => {
   const navigate = useNavigate();
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
 
   return useMutation(create, {
     onSuccess: (response) => {

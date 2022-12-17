@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -17,12 +17,12 @@ import { Post } from "../../components";
 
 import { useAllPostsData } from "../../reactQueryHooks/useAllPostsData";
 
-import UserContext from "../../context/UserContext";
+import useUserContext from "../../context/hooks/useUserContext";
 
 import styles from "./Home.module.scss";
 
 export const Home: React.FC = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   const { isLoading, data } = useAllPostsData();
 
