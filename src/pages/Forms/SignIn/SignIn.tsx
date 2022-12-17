@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import axios from "axios";
@@ -78,8 +78,14 @@ export const SignIn: React.FC = () => {
               variant="contained"
               size="large"
             >
-              {isSubmitting ? "Loading..." : "Submit"}
+              {isSubmitting ? "Loading..." : "Continue"}
             </Button>
+            <div className={styles.bottom}>
+              <span>Don't have an account?</span>
+              <Link to="/signup">
+                <p>Sign up</p>
+              </Link>
+            </div>
           </Form>
         )}
       </Formik>

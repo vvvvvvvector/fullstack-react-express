@@ -40,7 +40,7 @@ export const SignUp = () => {
             <h2 className={styles.header}>Sign up</h2>
             <Email name="email" />
             <Password name="password" label="Enter password" />
-            <Password name="confirmPassword" label="Confirm password" />
+            <Password name="confirmPassword" label="Re-enter password" />
             <Button
               sx={{
                 position: "relative",

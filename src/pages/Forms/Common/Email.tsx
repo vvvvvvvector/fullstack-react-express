@@ -16,7 +16,7 @@ export const Email: React.FC<FieldAttributes<{}>> = ({ ...props }) => {
       }}
       {...field}
       type="text"
-      label="Your email"
+      label="Email address"
       helperText={errorText}
       error={errorText !== ""}
     />
