@@ -7,7 +7,7 @@ import axios from "axios";
 import { getUserToken } from "../common/utils";
 
 const deletePost = ({ id }: { id?: string }) => {
-  return axios.delete(`http://localhost:4500/posts/${id}`, {
+  return axios.delete(`https://backend-iuo3.onrender.com/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${getUserToken()}`,
     },

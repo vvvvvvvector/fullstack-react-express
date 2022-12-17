@@ -10,7 +10,7 @@ import { getUserToken } from "../common/utils";
 
 const addNewPost = ({ title, text, tags }: NewPost) => {
   return axios.post(
-    "http://localhost:4500/posts",
+    "https://backend-iuo3.onrender.com/posts",
     {
       title,
       text,

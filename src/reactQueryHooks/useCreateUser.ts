@@ -16,7 +16,7 @@ const create = async ({
   email: string;
   password: string;
 }) => {
-  const { data } = await axios.post("http://localhost:4500/auth/signup", {
+  const { data } = await axios.post("https://backend-iuo3.onrender.com/auth/signup", {
     email,
     password,
   });

@@ -5,7 +5,7 @@ import axios from "axios";
 import { AwesomePost } from "../common/types";
 
 const fetch = async (postId?: string) => {
-  const { data } = await axios.get(`http://localhost:4500/posts/${postId}`);
+  const { data } = await axios.get(`https://backend-iuo3.onrender.com/posts/${postId}`);
 
   return data.doc;
 };
