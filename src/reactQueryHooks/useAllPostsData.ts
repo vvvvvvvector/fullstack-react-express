@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { AwesomePost } from "../common/types";
 
 const fetch = async () => {
-  const { data } = await axios.get("http://localhost:4500/posts");
+  const { data } = await axios.get("https://backend-iuo3.onrender.com/posts");
 
   return data.posts;
 };

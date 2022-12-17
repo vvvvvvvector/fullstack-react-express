@@ -23,7 +23,7 @@ const App: React.FC = () => {
 
     const fetchAuthMe = () => {
       axios
-        .get("http://localhost:4500/auth/me", {
+        .get("https://backend-iuo3.onrender.com/auth/me", {
           headers: {
             Authorization: "Bearer " + token,
           },
