@@ -8,12 +8,11 @@ import {
   Switch,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
 import Pagination from "@mui/material/Pagination";
 
-import { getUserToken, scrollToTop } from "../../common/utils";
+import { getUserToken } from "../../common/utils";
 
-import { Post } from "../../components";
+import { Post, ScrollButton } from "../../components";
 
 import { useAllPostsData } from "../../reactQueryHooks/useAllPostsData";
 
@@ -27,16 +26,6 @@ export const Home: React.FC = () => {
   const { isLoading, data } = useAllPostsData();
 
   const [isUserPosts, setIsUserPosts] = React.useState(false);
-  const [isVisible, setIsVisible] = React.useState(false);
-
-  window.addEventListener("scroll", () => {
-    const scrolled = document.documentElement.scrollTop;
-
-    const max = 200;
-
-    if (scrolled > max) setIsVisible(true);
-    else if (scrolled <= max) setIsVisible(false);
-  });
 
   const renderPosts = () => {
     if (isUserPosts) {
@@ -83,12 +72,7 @@ export const Home: React.FC = () => {
           size="large"
         />
       )}
-      {isVisible && (
-        <div onClick={scrollToTop} className={styles.scroll}>
-          <span>scroll to top</span>
-          <NorthOutlinedIcon className={styles.arrow} fontSize="small" />
-        </div>
-      )}
+      <ScrollButton />
     </div>
   );
 };
