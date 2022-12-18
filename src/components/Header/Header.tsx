@@ -11,7 +11,6 @@ import { clearUserToken, getUserToken, scrollToTop } from "../../common/utils";
 import useUserContext from "../../context/hooks/useUserContext";
 
 import styles from "./Header.module.scss";
-import { useQueryClient } from "react-query";
 
 export const Header: React.FC = () => {
   const { setUser } = useUserContext();

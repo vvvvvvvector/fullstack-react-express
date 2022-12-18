@@ -19,7 +19,6 @@ import { useAllPostsData } from "../../react-query/hooks/useAllPostsData";
 import useUserContext from "../../context/hooks/useUserContext";
 
 import styles from "./Home.module.scss";
-import { AwesomePost } from "../../common/types";
 
 export const Home: React.FC = () => {
   const { user } = useUserContext();
