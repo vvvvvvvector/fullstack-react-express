@@ -2,24 +2,20 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-import axios from "axios";
+import { axiosInstanse, getJWTHeader } from "../../axiosInstance";
 
-import { NewPost } from "../common/types";
-
-import { getUserToken } from "../common/utils";
+import { NewPost } from "../../common/types";
 
 const addNewPost = ({ title, text, tags }: NewPost) => {
-  return axios.post(
-    "https://backend-iuo3.onrender.com/posts",
+  return axiosInstanse.post(
+    "/posts",
     {
       title,
       text,
       tags,
     },
     {
-      headers: {
-        Authorization: "Bearer " + getUserToken(),
-      },
+      headers: getJWTHeader(),
     }
   );
 };

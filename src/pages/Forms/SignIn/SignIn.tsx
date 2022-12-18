@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-import axios from "axios";
+import { axiosInstanse } from "../../../axiosInstance";
 
 import { setUserToken } from "../../../common/utils";
 
@@ -32,8 +32,8 @@ export const SignIn: React.FC = () => {
           try {
             setSubmitting(true);
 
-            const { data: axiosResponse } = await axios.post(
-              "https://backend-iuo3.onrender.com/auth/signin",
+            const { data: axiosResponse } = await axiosInstanse.post(
+              "/auth/signin",
               {
                 email: data.email,
                 password: data.password,
@@ -48,7 +48,6 @@ export const SignIn: React.FC = () => {
             navigate("/");
 
             toast.success("Signed in successfully:>");
-            console.log(JSON.stringify(axiosResponse, null, 2));
 
             setSubmitting(false);
           } catch (error) {

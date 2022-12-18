@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { toast, Toaster } from "react-hot-toast";
 
-import axios from "axios";
+import { axiosInstanse } from "./axiosInstance";
 
 import { Header } from "./components";
 import { Home, SignIn, NewPost, WholePost, SignUp } from "./pages";
@@ -23,14 +23,11 @@ const App: React.FC = () => {
 
     const fetchAuthMe = async () => {
       try {
-        const { data } = await axios.get(
-          "https://backend-iuo3.onrender.com/auth/me",
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const { data } = await axiosInstanse.get("/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setUser(data.user);
       } catch (error) {

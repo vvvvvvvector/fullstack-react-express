@@ -6,19 +6,20 @@ import {
   CircularProgress,
   FormControlLabel,
   Switch,
+  Pagination,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import Pagination from "@mui/material/Pagination";
 
 import { getUserToken } from "../../common/utils";
 
-import { Post, ScrollButton } from "../../components";
+import { Post, ScrollButton, NoPosts } from "../../components";
 
-import { useAllPostsData } from "../../reactQueryHooks/useAllPostsData";
+import { useAllPostsData } from "../../react-query/hooks/useAllPostsData";
 
 import useUserContext from "../../context/hooks/useUserContext";
 
 import styles from "./Home.module.scss";
+import { AwesomePost } from "../../common/types";
 
 export const Home: React.FC = () => {
   const { user } = useUserContext();
@@ -29,16 +30,27 @@ export const Home: React.FC = () => {
 
   const renderPosts = () => {
     if (isUserPosts) {
-      return data?.map((item, index) => {
-        if (item.userEmail === user?.email)
-          return <Post key={index} {...item} />;
+      const filteredData = data?.filter((item, index) => {
+        if (item.userEmail === user?.email) {
+          return item;
+        }
       });
+
+      return filteredData && filteredData?.length > 0 ? (
+        filteredData?.map((item, index) => <Post key={index} {...item} />)
+      ) : (
+        <NoPosts />
+      );
     }
 
     return data?.map((item, index) => <Post key={index} {...item} />);
   };
 
-  return (
+  return isLoading ? (
+    <div className={styles.loading}>
+      <CircularProgress size="5rem" />
+    </div>
+  ) : (
     <div className={styles.home}>
       <h1>{user ? `Signed in as ${user.email}!` : "Home page"}</h1>
       {getUserToken() ? (
@@ -57,21 +69,8 @@ export const Home: React.FC = () => {
       ) : (
         <span>{"Sign in if you want to create your posts!"}</span>
       )}
-      {isLoading ? (
-        <div className={styles.loading}>
-          <CircularProgress size="5rem" />
-        </div>
-      ) : (
-        renderPosts()
-      )}
-      {!isLoading && (
-        <Pagination
-          count={10}
-          variant="outlined"
-          shape="rounded"
-          size="large"
-        />
-      )}
+      {renderPosts()}
+      {/* <Pagination count={10} variant="outlined" shape="rounded" size="large" /> */}
       <ScrollButton />
     </div>
   );

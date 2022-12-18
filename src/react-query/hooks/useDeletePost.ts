@@ -1,16 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-hot-toast";
+import { useMutation, useQueryClient } from "react-query";
 
-import axios from "axios";
+import { queryKeys } from "../constants";
 
-import { getUserToken } from "../common/utils";
+import { axiosInstanse, getJWTHeader } from "../../axiosInstance";
 
 const deletePost = ({ id }: { id?: string }) => {
-  return axios.delete(`https://backend-iuo3.onrender.com/posts/${id}`, {
-    headers: {
-      Authorization: `Bearer ${getUserToken()}`,
-    },
+  return axiosInstanse.delete(`/posts/${id}`, {
+    headers: getJWTHeader(),
   });
 };
 
@@ -22,7 +20,7 @@ export const useDeletePost = () => {
 
   return useMutation(deletePost, {
     onSuccess: () => {
-      queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries(queryKeys.posts);
 
       toast.success("Post was successfully deleted!");
 

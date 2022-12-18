@@ -1,15 +1,19 @@
-import axios from "axios";
 import { useQuery } from "react-query";
-import { AwesomePost } from "../common/types";
+
+import { queryKeys } from "../constants";
+
+import { axiosInstanse } from "../../axiosInstance";
+
+import { AwesomePost } from "../../common/types";
 
 const fetch = async () => {
-  const { data } = await axios.get("https://backend-iuo3.onrender.com/posts");
+  const { data } = await axiosInstanse.get("/posts");
 
   return data.posts;
 };
 
 export const useAllPostsData = () => {
-  return useQuery("posts", fetch, {
+  return useQuery(queryKeys.posts, fetch, {
     cacheTime: 20000,
     select: (data): AwesomePost[] => {
       return data.map((i: any) => {

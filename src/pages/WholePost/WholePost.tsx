@@ -6,7 +6,7 @@ import WestIcon from "@mui/icons-material/West";
 
 import { Post } from "../../components/Post/Post";
 
-import { useWholePostData } from "../../reactQueryHooks/useWholePostData";
+import { useWholePostData } from "../../react-query/hooks/useWholePostData";
 
 import styles from "./WholePost.module.scss";
 

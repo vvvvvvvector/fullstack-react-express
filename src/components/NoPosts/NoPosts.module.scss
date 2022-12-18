@@ -1,0 +1,12 @@
+.empty {
+  color: #28282b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 150px;
+
+  span {
+    margin-top: 15px;
+  }
+}

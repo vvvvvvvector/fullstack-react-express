@@ -5,7 +5,7 @@ import { TextField, Button, Chip } from "@mui/material";
 
 import { Formik, Form } from "formik";
 
-import { useAddNewPost } from "../../reactQueryHooks/useAddNewPost";
+import { useAddNewPost } from "../../react-query/hooks/useAddNewPost";
 
 import styles from "./NewPost.module.scss";
 
