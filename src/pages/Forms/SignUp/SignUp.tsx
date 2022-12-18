@@ -9,7 +9,7 @@ import { Formik, Form } from "formik";
 
 import { SignUpValidation } from "../Common/validations";
 
-import { useCreateUser } from "../../../reactQueryHooks/useCreateUser";
+import { useCreateUser } from "../../../react-query/hooks/useCreateUser";
 
 import styles from "./SignUp.module.scss";
 

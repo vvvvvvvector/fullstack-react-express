@@ -9,7 +9,7 @@ import { formatDate } from "../../common/utils";
 
 import { AwesomePost } from "../../common/types";
 
-import { useDeletePost } from "../../reactQueryHooks/useDeletePost";
+import { useDeletePost } from "../../react-query/hooks/useDeletePost";
 
 import useUserContext from "../../context/hooks/useUserContext";
 
