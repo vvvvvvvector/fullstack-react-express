@@ -26,7 +26,9 @@ export const Post: React.FC<AwesomePost> = ({
 }) => {
   const { user } = useUserContext();
 
-  const { mutate } = useDeletePost();
+  const { mutateAsync } = useDeletePost();
+
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   return (
     <Link to={`/post/${id}`}>
@@ -53,17 +55,21 @@ export const Post: React.FC<AwesomePost> = ({
               top: "30px",
               right: "30px",
             }}
-            onClick={(event) => {
+            onClick={async (event) => {
               event.preventDefault();
               event.stopPropagation();
               event.nativeEvent.stopImmediatePropagation();
-              mutate({ id });
+
+              setIsDeleting(true);
+              await mutateAsync({ id });
+              setIsDeleting(false);
             }}
-            endIcon={<DeleteIcon color="error" />}
+            endIcon={<DeleteIcon color={isDeleting ? "disabled" : "error"} />}
             color="error"
             variant="outlined"
+            disabled={isDeleting}
           >
-            delete
+            {isDeleting ? "deleting..." : "delete"}
           </Button>
         )}
       </div>

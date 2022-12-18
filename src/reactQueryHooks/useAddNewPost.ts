@@ -30,7 +30,7 @@ export const useAddNewPost = () => {
   return useMutation(addNewPost, {
     onSuccess: () => {
       toast.success("Post was successfully added!");
-      
+
       navigate("/");
     },
     onError: () => {

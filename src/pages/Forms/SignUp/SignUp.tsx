@@ -21,16 +21,16 @@ export const SignUp = () => {
       <Formik
         initialValues={{ email: "", password: "", confirmPassword: "" }}
         validationSchema={SignUpValidation}
-        onSubmit={(data, { setSubmitting }) => {
+        onSubmit={async (data, { setSubmitting }) => {
           if (data.password === data.confirmPassword) {
             setSubmitting(true);
 
-            mutateAsync({
+            await mutateAsync({
               email: data.email,
               password: data.password,
-            }).then(() => {
-              setSubmitting(false);
             });
+
+            setSubmitting(false);
           } else {
             setSubmitting(false);
 
