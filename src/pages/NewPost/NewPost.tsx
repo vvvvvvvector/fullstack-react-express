@@ -10,7 +10,7 @@ import { useAddNewPost } from "../../reactQueryHooks/useAddNewPost";
 import styles from "./NewPost.module.scss";
 
 export const NewPost: React.FC = () => {
-  const { mutate } = useAddNewPost();
+  const { mutateAsync } = useAddNewPost();
 
   const [tagsInput, setTagsInput] = React.useState("");
   const [tags, setTags] = React.useState<string[]>([]);
@@ -26,19 +26,27 @@ export const NewPost: React.FC = () => {
           title: "",
           text: "",
         }}
-        onSubmit={(data) => {
+        onSubmit={async (data, { setSubmitting }) => {
           if (data.text !== "" && data.title !== "") {
-            mutate({
-              title: data.title,
-              text: data.text,
-              tags,
-            });
+            try {
+              setSubmitting(true);
+
+              await mutateAsync({
+                title: data.title,
+                text: data.text,
+                tags,
+              });
+
+              setSubmitting(false);
+            } catch (error) {
+              console.log(error);
+            }
           } else {
             toast.error("You must add title and text!");
           }
         }}
       >
-        {({ handleChange }) => (
+        {({ handleChange, isSubmitting }) => (
           <Form>
             <h2 className={styles.header}>New post</h2>
             <TextField
@@ -111,8 +119,9 @@ export const NewPost: React.FC = () => {
               type="submit"
               variant="contained"
               size="large"
+              disabled={isSubmitting}
             >
-              Create
+              {isSubmitting ? "creating..." : "create"}
             </Button>
           </Form>
         )}

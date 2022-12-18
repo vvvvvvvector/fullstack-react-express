@@ -21,29 +21,32 @@ const App: React.FC = () => {
   React.useEffect(() => {
     const token = getUserToken();
 
-    const fetchAuthMe = () => {
-      axios
-        .get("https://backend-iuo3.onrender.com/auth/me", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        })
-        .then((res) => {
-          setUser(res.data.user);
-        })
-        .catch((error) => {
-          if (error.response.status === 403) {
-            toast.error(
-              "It seems that yours jwt token is expired...\nSign in again to use the app"
-            );
-
-            setUser(null);
-            clearUserToken();
-            navigate("/");
-          } else {
-            console.log(error.message);
+    const fetchAuthMe = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://backend-iuo3.onrender.com/auth/me",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
           }
-        });
+        );
+
+        setUser(data.user);
+      } catch (error) {
+        if (error.response.status === 403) {
+          toast.error(
+            "It seems that yours jwt token is expired...\nSign in again to use the app"
+          );
+
+          setUser(null);
+          clearUserToken();
+          navigate("/");
+        } else {
+          console.log(error);
+          toast.error("Something went wrong while auth!");
+        }
+      }
     };
 
     if (token) {

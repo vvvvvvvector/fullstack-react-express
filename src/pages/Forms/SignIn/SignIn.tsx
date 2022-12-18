@@ -29,30 +29,32 @@ export const SignIn: React.FC = () => {
         initialValues={{ email: "", password: "", isCool: false }}
         validationSchema={SignInValidation}
         onSubmit={async (data, { setSubmitting }) => {
-          setSubmitting(true);
+          try {
+            setSubmitting(true);
 
-          await axios
-            .post("https://backend-iuo3.onrender.com/auth/signin", {
-              email: data.email,
-              password: data.password,
-            })
-            .then((res) => {
-              const { user, token } = res.data;
+            const { data: axiosResponse } = await axios.post(
+              "https://backend-iuo3.onrender.com/auth/signin",
+              {
+                email: data.email,
+                password: data.password,
+              }
+            );
 
-              setUser(user);
-              setUserToken(token);
+            const { user, token } = axiosResponse;
 
-              navigate("/");
+            setUser(user);
+            setUserToken(token);
 
-              toast.success("Signed in successfully:>");
-              console.log(JSON.stringify(res.data, null, 2));
-            })
-            .catch((err) => {
-              toast.error("Incorrect username or password.");
-              console.log(JSON.stringify(err.response.data, null, 2));
-            });
+            navigate("/");
 
-          setSubmitting(false);
+            toast.success("Signed in successfully:>");
+            console.log(JSON.stringify(axiosResponse, null, 2));
+
+            setSubmitting(false);
+          } catch (error) {
+            toast.error("Incorrect username or password.");
+            console.log(JSON.stringify(error.response.data, null, 2));
+          }
         }}
       >
         {({ values, isSubmitting, handleChange }) => (
