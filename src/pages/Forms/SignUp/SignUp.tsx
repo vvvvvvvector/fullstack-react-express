@@ -14,7 +14,7 @@ import { useCreateUser } from "../../../reactQueryHooks/useCreateUser";
 import styles from "./SignUp.module.scss";
 
 export const SignUp = () => {
-  const { mutate } = useCreateUser();
+  const { mutateAsync } = useCreateUser();
 
   return (
     <div className={styles["form-wrapper"]}>
@@ -25,9 +25,12 @@ export const SignUp = () => {
           if (data.password === data.confirmPassword) {
             setSubmitting(true);
 
-            mutate({ email: data.email, password: data.password });
-
-            setSubmitting(false);
+            mutateAsync({
+              email: data.email,
+              password: data.password,
+            }).then(() => {
+              setSubmitting(false);
+            });
           } else {
             setSubmitting(false);
 
