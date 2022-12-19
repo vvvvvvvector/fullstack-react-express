@@ -1,55 +1,17 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { toast, Toaster } from "react-hot-toast";
-
-import { axiosInstanse } from "./axiosInstance";
+import { Toaster } from "react-hot-toast";
 
 import { Header } from "./components";
 import { Home, SignIn, NewPost, WholePost, SignUp } from "./pages";
 
-import { User } from "./common/types";
+import { useUser } from "./react-query/hooks/useUser";
 
 import UserContext from "./context/UserContext";
-import { clearUserToken, getUserToken } from "./common/utils";
 
 const App: React.FC = () => {
-  const [user, setUser] = React.useState<User>(null);
-
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    const token = getUserToken();
-
-    const fetchAuthMe = async () => {
-      try {
-        const { data } = await axiosInstanse.get("/auth/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setUser(data.user);
-      } catch (error) {
-        if (error.response.status === 403) {
-          toast.error(
-            "It seems that yours jwt token is expired...\nSign in again to use the app"
-          );
-
-          setUser(null);
-          clearUserToken();
-          navigate("/");
-        } else {
-          console.log(error);
-          toast.error("Something went wrong while auth!");
-        }
-      }
-    };
-
-    if (token) {
-      fetchAuthMe();
-    }
-  }, []);
+  const { user, setUser } = useUser();
 
   return (
     <>
