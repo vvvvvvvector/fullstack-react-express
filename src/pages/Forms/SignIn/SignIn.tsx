@@ -51,8 +51,7 @@ export const SignIn: React.FC = () => {
 
             setSubmitting(false);
           } catch (error) {
-            toast.error("Incorrect username or password.");
-            console.log(JSON.stringify(error.response.data, null, 2));
+            toast.error(error.response.data.message);
           }
         }}
       >

@@ -7,6 +7,8 @@ import { axiosInstanse } from "../../axiosInstance";
 
 import { User } from "../../common/types";
 
+import { queryKeys } from "../constants";
+
 import { clearUserToken, getUserToken } from "../../common/utils";
 
 const authMe = async () => {
@@ -24,7 +26,9 @@ export const useUser = () => {
 
   const [user, setUser] = React.useState<User>(null);
 
-  useQuery("user", authMe, {
+  useQuery(queryKeys.authUser, authMe, {
+    staleTime: 1000 * 60 * 0.5,
+    retry: 1,
     enabled: getUserToken() !== null,
     onSuccess: ({ _id, email }) => {
       setUser({
@@ -33,9 +37,10 @@ export const useUser = () => {
       });
     },
     onError: () => {
-      navigate("/");
       clearUserToken();
       setUser(null);
+      navigate("/");
+
       toast.error(
         "It seems that Yours token is expired...\nSign in again to use the app.",
         {
