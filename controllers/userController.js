@@ -68,7 +68,7 @@ export const signIn = async (req, res) => {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: "1min",
+        expiresIn: "5min", // for debugging 
       }
     );
 
