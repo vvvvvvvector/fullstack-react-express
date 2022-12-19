@@ -25,7 +25,7 @@ const App: React.FC = () => {
           <Route path="/post/:id" element={<WholePost />} />
         </Routes>
       </UserContext.Provider>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-left" />
       <Toaster
         position="top-center"
         toastOptions={{
