@@ -1,0 +1,23 @@
+# Fullstack app
+
+- Reactjs 18 😲
+- React Hooks 🪝
+- Context api
+- React Query
+- React Router v6 📍🗺
+- Material UI
+- Skeleton
+- CSS modules
+- SCSS 💅🫦💄
+- Typescript 🤍
+- Formik
+- axios
+- sign up / sign in / sign out
+- google chrome and safari devtools 💻🧑‍💻 
+- react chrome devtools
+- Pagination
+- LocalStorage 📦
+- Code splitting 🖖
+- Prettier
+- Express 
+- MongoDB
